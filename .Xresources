@@ -1,0 +1,133 @@
+##############
+## Xft settings
+##############
+
+Xft.dpi:                    96
+Xft.antialias:              true
+Xft.rgba:                   rgb
+Xft.hinting:                true
+Xft.hintstyle:              hintslight
+
+
+
+################
+## URXVT settings
+################
+
+URxvt.depth:                32
+URxvt.geometry:             90x30
+URxvt.loginShell:           true
+URxvt.internalBorder:       5 
+URxvt.lineSpace:            0
+
+## transparency - true or false (default)
+
+! -----------------------------------------------------------------------------
+! File: gruvbox-urxvt256.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 13 Dec 2013
+! -----------------------------------------------------------------------------
+
+URxvt.color24:  #076678
+URxvt.color66:  #427b58
+URxvt.color88:  #9d0006
+URxvt.color96:  #8f3f71
+URxvt.color100: #79740e
+URxvt.color108: #8ec07c
+URxvt.color109: #83a598
+URxvt.color130: #af3a03
+URxvt.color136: #b57614
+URxvt.color142: #b8bb26
+URxvt.color167: #fb4934
+URxvt.color175: #d3869b
+URxvt.color208: #fe8019
+URxvt.color214: #fabd2f
+URxvt.color223: #ebdbb2
+URxvt.color228: #f2e5bc
+URxvt.color229: #fbf1c7
+URxvt.color230: #f9f5d7
+URxvt.color234: #1d2021
+URxvt.color235: #282828
+URxvt.color236: #32302f
+URxvt.color237: #3c3836
+URxvt.color239: #504945
+URxvt.color241: #665c54
+URxvt.color243: #7c6f64
+URxvt.color244: #928374
+URxvt.color245: #928374
+URxvt.color246: #a89984
+URxvt.color248: #bdae93
+URxvt.color250: #d5c4a1
+
+! -----------------------------------------------------------------------------
+! File: gruvbox-dark.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+
+! hard contrast: *background: #1d2021
+*background: #282828
+! soft contrast: *background: #32302f
+*foreground: #ebdbb2
+! Black + DarkGrey
+*color0:  #282828
+*color8:  #928374
+! DarkRed + Red
+*color1:  #cc241d
+*color9:  #fb4934
+! DarkGreen + Green
+*color2:  #98971a
+*color10: #b8bb26
+! DarkYellow + Yellow
+*color3:  #d79921
+*color11: #fabd2f
+! DarkBlue + Blue
+*color4:  #458588
+*color12: #83a598
+! DarkMagenta + Magenta
+*color5:  #b16286
+*color13: #d3869b
+! DarkCyan + Cyan
+*color6:  #689d6a
+*color14: #8ec07c
+! LightGrey + White
+*color7:  #a89984
+*color15: #ebdbb2
+## tint with any color; i.e., blue, red, tomato4, olivedrab2, etc.
+##   some nice listings are at:
+##     http://www.nisrv.com/drupal/?q=node/11
+##     http://www.htmlgoodies.com/tutorials/colors/article.php/3478921
+##URxvt*tintColor: S_base03
+
+## shading - 0 to 99 darkens, 101 to 200 lightens.
+URxvt*shading: 15
+
+URxvt*saveLines: 12000
+
+
+## Monaco Linux font
+URxvt*font: xft:inconsolata:pixelsize=14
+URxvt*boldFont: xft:inconsolata:bold:pixelsize=14
+URxvt*letterSpace: -1
+
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+## scrollbar - true (default) or false
+URxvt*scrollBar: false 
+
+#Rofi colors
+rofi.color-window: #222222, #222222, #b1b4b3
+rofi.color-normal: #222222, #b1b4b3, #222222, #005577, #b1b4b3
+rofi.color-active: #222222, #b1b4b3, #222222, #007763, #b1b4b3
+rofi.color-normal: #222222, #b1b4b3, #222222, #77003d, #b1b4b3
