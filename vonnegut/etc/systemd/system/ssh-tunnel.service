@@ -1,0 +1,11 @@
+[Unit]
+Description=SSH tunnel for deluge
+After=network.target
+
+[Service]
+Environment="AUTOSSH_GATETIME=0"
+User=cinna
+ExecStart=/usr/bin/autossh -M 0 -NL 8112:localhost:8112 -p 420 -i ~/.ssh/id_rsa -o TCPKeepAlive=yes ralcaraz@136.26.84.150
+
+[Install]
+WantedBy=multi-user.target
