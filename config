@@ -1,0 +1,29 @@
+Host home 
+  HostName ricardoalcaraz.dev
+  Port 48484
+  User ralcaraz
+  IdentityFile ~/.ssh/id_rsa
+
+Host seedbox
+  HostName 136.26.84.150
+  Port 420
+  User ralcaraz
+  IdentityFile ~/.ssh/id_rsa
+
+Host vonnegut
+  HostName 192.168.1.31
+  Port 48484
+  User cinna
+  IdentityFile ~/.ssh/id_rsa
+
+Host root 
+  HostName 192.168.1.31
+  Port 48484
+  User root 
+  IdentityFile ~/.ssh/id_rsa_root
+
+Host rootseed
+  HostName 136.26.84.150
+  Port 420
+  User root
+  IdentityFile ~/.ssh/id_rsa_root
