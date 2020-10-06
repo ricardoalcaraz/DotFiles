@@ -1,0 +1,9 @@
+vonnegut(192.168.1.31)
+rabbitmq:5672
+pgadmin:9563
+ombi:5000
+plex:32400
+radarr:8989
+sonarr:7878
+
+media.ricardoalcaraz.dev -> 5000
