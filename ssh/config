@@ -1,0 +1,52 @@
+Host home
+  HostName ricardoalcaraz.dev
+  Port 48484
+  User ralcaraz
+  IdentityFile ~/.ssh/id_rsa
+
+Host puck
+  HostName 192.168.1.27
+  Port 420
+  User ralcaraz
+  IdentityFile ~/.ssh/id_rsa
+
+Host vonnegut
+  HostName 192.168.1.31
+  Port 48484
+  User cinna
+  IdentityFile ~/.ssh/id_rsa
+
+Host root
+  HostName 192.168.1.31
+  Port 48484
+  User root
+  IdentityFile ~/.ssh/id_rsa_root
+
+Host rootseed
+  HostName 136.26.84.150
+  Port 420
+  User root
+  IdentityFile ~/.ssh/id_rsa_root
+
+Host orwell
+  HostName ricardoalcaraz.com
+  Port 48483
+  User ralcaraz
+
+Host archiso
+  HostName 192.168.0.134
+  User root
+  IdentityFile ~/.ssh/id_rsa_root
+
+Host huxley
+  HostName gonryun.com
+  Port 420
+  User ralcaraz
+  IdentityFile ~/.ssh/id_rsa
+  LocalForward 5901 localhost:5901
+
+Host huxley-root
+  HostName gonryun.com
+  Port 420
+  User root
+  IdentityFile ~/.ssh/id_rsa_root
