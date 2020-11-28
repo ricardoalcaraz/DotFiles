@@ -1,0 +1,1 @@
+cp .ssh/config ~/.ssh/
