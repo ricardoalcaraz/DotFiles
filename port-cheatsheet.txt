@@ -5,5 +5,5 @@ ombi:5000
 plex:32400
 radarr:8989
 sonarr:7878
-
+homebridge
 media.ricardoalcaraz.dev -> 5000
