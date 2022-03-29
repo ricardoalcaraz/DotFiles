@@ -5,6 +5,7 @@ alias scle='sudo systemctl enable'
 alias cpr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1'
 alias mvr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 --remove-source-files'
 alias ls='ls --color=auto'
+alias wake='wol 2c:f0:5d:60:b9:d2'
 
 # Lines configured by zsh-newuser-install
 EDITOR=/usr/bin/vim
