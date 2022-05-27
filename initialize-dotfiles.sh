@@ -8,3 +8,6 @@ cd yay
 makepkg -si --noconfirm
 rm -rf yay
 yay
+
+git config --global user.email "ralcarazerhs@gmail.com"
+git config --global user.name "ralcaraz"
