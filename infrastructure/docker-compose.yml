@@ -29,3 +29,10 @@ services:
       - "8222:8222"
       - "6222:6222"
   
+  apigateway:
+    container_name: apigateway
+    image: rarservices.azurecr.io/apigateway:latest
+    ports:
+      - "10000:80"
+      - "10001:443"
+    restart: unless-stopped
