@@ -45,7 +45,6 @@ services:
       - RAR_HostName=${host}
     volumes:
       - ${DOCKER_STORAGE}/apigateway:/data
-      - ./overrides.json:/overrides.json
     restart: unless-stopped
     networks:
       - infrastructure
