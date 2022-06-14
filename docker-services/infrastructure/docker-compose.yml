@@ -39,14 +39,16 @@ services:
     container_name: apigateway
     image: rarservices.azurecr.io/apigateway:latest
     ports:
-      - "10000:80"
-      - "10001:443"
+      - "80:80"
+      - "443:443"
     environment:
       - RAR_HostName=${host}
     volumes:
       - ${DOCKER_STORAGE}/apigateway:/data
+      - ./overrides.json:/overrides.json
     restart: unless-stopped
     networks:
+      - infrastructure
       - personal
 
 networks:

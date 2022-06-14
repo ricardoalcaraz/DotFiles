@@ -1,0 +1,77 @@
+{
+    "Kestrel": {
+        "Endpoints": {
+        "Http": {
+            "Url": "http://*:80"
+        },
+        "Https": {
+            "Url": "https://*:443"
+        }
+        }
+    },
+    "ReverseProxy": {
+        "Routes": {
+        "mediaRoute": {
+            "ClusterId": "mediaCluster",
+            "Match": {
+            "Hosts": ["media.ricardoalcaraz.dev"]
+            },
+            "Path": "{**catch-all}"
+        },
+        "apiRoute": {
+            "ClusterId": "apiCluster",
+            "Match": {
+            "Hosts": ["api.ricardoalcaraz.dev"]
+            },
+            "Path": "{**catch-all}"
+        },
+        "personalRoute": {
+            "ClusterId": "personalCluster",
+            "Match": {
+            "Hosts": ["ricardoalcaraz.dev"]
+            },
+            "Path": "{**catch-all}"
+        },
+        "devRoute": {
+            "ClusterId": "devCluster",
+            "Match": {
+            "Hosts": ["dev.ricardoalcaraz.dev"]
+            },
+            "Path": "{**catch-all}"
+        }
+        },
+        "Clusters": {
+        "apiCluster": {
+            "Destinations": {
+            "localAddress": {
+                "Address": "http://parking-page"
+            }
+            }
+        },
+        "mediaCluster": {
+            "Destinations": {
+            "nas": {
+                "Address": "http://192.168.1.194:12220"
+            }
+            }
+        },
+        "personalCluster": {
+            "Destinations": {
+            "local": {
+                "Address": "http://parking-page"
+            }
+            }
+        },
+        "devCluster": {
+            "Destinations": {
+            "localDev": {
+                "Address": "http://localhost:5002"
+            }
+            }
+        }
+        }
+    },
+    "LettuceEncrypt": {
+        "DomainNames": ["ricardoalcaraz.dev", "api.ricardoalcaraz.dev", "dev.ricardoalcaraz.dev", "media.ricardoalcaraz.dev"]
+    }
+}
