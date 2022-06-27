@@ -35,6 +35,10 @@ services:
       - "5001:80"
     environment:
       - RAR_HostName=${host}
+      - CREDENTIALS__GOOGLE__CLIENTSECRET=${GOOGLE_CLIENTID}
+      - CREDENTIALS__GOOGLE__CLIENTID=${GOOGLE_CLIENTSECRET}
+      - CREDENTIALS__SENDGRID__APIKEY=${SENDGRID_APIKEY}
+      - CONNECTIONSTRINGS__POSTGRES=${POSTGRES_CONNECTIONSTRING}
     volumes:
       - ${DOCKER_STORAGE}/auth:/data
     restart: unless-stopped
