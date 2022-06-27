@@ -22,6 +22,7 @@ services:
     volumes: 
       - ${DOCKER_STORAGE}/redis:/data
     command: redis-server --save 60 1 --loglevel warning
+    restart: unless-stopped
     networks:
       - infrastructure
 
@@ -32,28 +33,11 @@ services:
       - "4222:4222"
       - "8222:8222"
       - "6222:6222"
-    networks:
-      - infrastructure
-
-  apigateway:
-    container_name: apigateway
-    image: rarservices.azurecr.io/apigateway:latest
-    ports:
-      - "80:80"
-      - "443:443"
-    environment:
-      - RAR_HostName=${host}
-    volumes:
-      - ${DOCKER_STORAGE}/apigateway:/data
     restart: unless-stopped
     networks:
       - infrastructure
-      - personal
 
 networks:
-  personal:
-    name: personal
-    external: true
   infrastructure:
     name: infrastructure
     external: true

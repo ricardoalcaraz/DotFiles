@@ -6,11 +6,42 @@ services:
     image: rarservices.azurecr.io/parking-page:latest
     ports:
       - "5000:80"
+    volumes:
+      - ${DOCKER_STORAGE}/parking-page:/data
     restart: unless-stopped
     networks:
       - personal
       - infrastructure
 
+  apigateway:
+    container_name: apigateway
+    image: rarservices.azurecr.io/apigateway:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - RAR_HostName=${host}
+    volumes:
+      - ${DOCKER_STORAGE}/apigateway:/data
+    restart: unless-stopped
+    networks:
+      - infrastructure
+      - personal
+
+  auth:
+    container_name: auth
+    image: rarservices.azurecr.io/identity:latest
+    ports:
+      - "5001:80"
+    environment:
+      - RAR_HostName=${host}
+    volumes:
+      - ${DOCKER_STORAGE}/auth:/data
+    restart: unless-stopped
+    networks:
+      - infrastructure
+      - personal
+      
 networks:
   personal:
     name: personal
