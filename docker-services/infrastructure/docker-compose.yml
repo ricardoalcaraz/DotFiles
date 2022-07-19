@@ -9,8 +9,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ${POSTGRES_DATA}:/var/lib/postgresql/data
+      - ${DOCKER_STORAGE}/postgres/data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - infrastructure
 
   redis:
     container_name: redis
@@ -18,8 +20,11 @@ services:
     ports: 
       - "6379:6379"
     volumes: 
-      - ${REDIS_STORAGE}:/data
+      - ${DOCKER_STORAGE}/redis:/data
     command: redis-server --save 60 1 --loglevel warning
+    restart: unless-stopped
+    networks:
+      - infrastructure
 
   nats:
     container_name: nats
@@ -28,11 +33,12 @@ services:
       - "4222:4222"
       - "8222:8222"
       - "6222:6222"
-  
-  apigateway:
-    container_name: apigateway
-    image: rarservices.azurecr.io/apigateway:latest
-    ports:
-      - "10000:80"
-      - "10001:443"
     restart: unless-stopped
+    networks:
+      - infrastructure
+
+networks:
+  infrastructure:
+    name: infrastructure
+    external: true
+
