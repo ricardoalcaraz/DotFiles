@@ -14,17 +14,17 @@ services:
     networks:
       - infrastructure
 
-  redis:
-    container_name: redis
-    image: redis:latest
-    ports: 
-      - "6379:6379"
-    volumes: 
-      - ${DOCKER_STORAGE}/redis:/data
-    command: redis-server --save 60 1 --loglevel warning
-    restart: unless-stopped
-    networks:
-      - infrastructure
+  # redis:
+  #   container_name: redis
+  #   image: redis:latest
+  #   ports: 
+  #     - "6379:6379"
+  #   volumes: 
+  #     - ${DOCKER_STORAGE}/redis:/data
+  #   command: redis-server --save 60 1 --loglevel warning
+  #   restart: unless-stopped
+  #   networks:
+  #     - infrastructure
 
   nats:
     container_name: nats
