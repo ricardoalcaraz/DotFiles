@@ -38,3 +38,4 @@ Added automatic share mounting with systemd for prometheus statistics shared fol
 
 # TODO
 - Add prometheus metrics to .net core app: https://github.com/prometheus-net/prometheus-net
+- prometheus auth https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
