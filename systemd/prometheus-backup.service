@@ -1,0 +1,7 @@
+[Unit]
+Description=Backs up files
+
+[Service]
+ExecStart=/usr/bin/rsync -a --delete --quiet /var/lib/prometheus/ /raid/prometheus
+ExecStart=/usr/bin/rsync -a --delete --quiet /etc/prometheus/prometheus.yml /raid/prometheus/prometheus.yml
+Type=oneshot

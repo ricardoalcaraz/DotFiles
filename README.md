@@ -33,3 +33,8 @@ Vm Setup
 #1 - Arch Linux
 #2 - Windows
 
+# NFS - 07/26/22
+Added automatic share mounting with systemd for prometheus statistics shared folder save This will serve as a backup to the prometheus statistics
+
+# TODO
+- Add prometheus metrics to .net core app: https://github.com/prometheus-net/prometheus-net

@@ -1,0 +1,8 @@
+[Unit]
+Description=Backup prometheus data every 15min to RAID array and external storage
+
+[Timer]
+OnBootSec=15min
+
+[Install]
+WantedBy=timers.target
