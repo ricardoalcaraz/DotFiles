@@ -33,3 +33,40 @@ Vm Setup
 #1 - Arch Linux
 #2 - Windows
 
+# NFS - 07/26/22
+Added automatic share mounting with systemd for prometheus statistics shared folder save This will serve as a backup to the prometheus statistics
+
+# TODO
+- Add prometheus metrics to .net core app: https://github.com/prometheus-net/prometheus-net
+- prometheus auth https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
+
+# FFMPEG
+ffmpeg -hwaccel cuvid -hwaccel_output_format cuda -i ./touchstone.mov -c:v hevc_nvenc -preset slow -tag:v hvc1 -movflags faststart -an output.mp4
+
+(working command however output is 1080p)
+ffmpeg -hwaccel vaapi -hwaccel_output_format hevc_nvenc -i ./touchstone.mov -vf "hwupload_cuda" -c:v hevc_nvenc -preset slow -tag:v hvc1 -movflags faststart -an output_4k.mp4
+
+ffmpeg -i ./touchstone.mov -vf "hwupload_cuda" -c:v hevc_nvenc -preset slow -tag:v hvc1 -movflags faststart -an output_4k.mp4
+
+
+ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -hwaccel_device /dev/dri/renderD128 -i /mnt/linux/IMG_5277.MOV -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe /mnt/linux/test.webm
+
+ffmpeg -hwaccel qsv -c:v hevc_qsv -load_plugin hevc_hw -vf -i /mnt/linux/IMG_5277.MOV -vf 'scale_vaapi=w=1920:h=1080:format=nv12' -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe -an output.webm
+
+ffmpeg -hwaccel qsv -c:v hevc_qsv -hwaccel_output_format qsv -i /mnt/linux/IMG_5277.MOV -an -vf scale_qsv=w=1920:h=1080:format=nv12,format=nv12 -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe output.webm
+
+ffmpeg -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -i /mnt/linux/IMG_5277.MOV -vf 'format=p010,hwupload' -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe -an output.webm
+
+ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -i /mnt/linux/IMG_5277.MOV -f null -
+
+ffmpeg -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -i /mnt/linux/IMG_5278.MOV -vf 'format=p010,hwupload' -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe -an output.webm
+
+
+## Working intel ffmpeg commands
+sudo ffmpeg -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -i /mnt/linux/IMG_5278.MOV -vf 'format=p010,hwupload' -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe -an /home/ralcaraz/chimney.webm
+
+sudo ffmpeg -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -i /mnt/linux/IMG_5056.mov -vf 'format=p010,hwupload' -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe -an /home/ralcaraz/Videos/touchstone.webm
+
+sudo ffmpeg -hwaccel vaapi -hwaccel_device /dev/dri/renderD128 -i /mnt/linux/IMG_5056.mov -vf 'format=p010,hwupload' -c:v vp9_vaapi -global_quality 50 -bf 1 -bsf:v vp9_raw_reorder,vp9_superframe /home/ralcaraz/Videos/touchstone.webm
+
+## Working Nvidia ffmpeg commands
