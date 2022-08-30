@@ -1,3 +1,10 @@
+_dotnet_zsh_complete()
+{
+  local completions=("$(dotnet complete "$words")")
+
+  reply=( "${(ps:\n:)completions}" )
+}
+
 alias systemctl='sudo systemctl'
 alias scl='sudo systemctl'
 alias journalctl='sudo journalctl'
@@ -33,3 +40,5 @@ zle -N down-line-or-beginning-search
 prompt walters
 PROMPT='%F{green}%n%f@%F{magenta}%m%f %F{blue}%B%~%b%f %# '
 RPROMPT='[%F{yellow}%?%f]'
+
+compctl -K _dotnet_zsh_complete dotnet
