@@ -1,0 +1,56 @@
+{
+    "ReverseProxy": {
+        "Routes": {
+            "mediaRoute": {
+                "ClusterId": "mediaCluster",
+                "Match": {
+                    "Hosts": [
+                        "media.ricardoalcaraz.dev"
+                    ]
+                },
+                "Path": "{**catch-all}"
+            },
+            "authRoute": {
+                "ClusterId": "authCluster",
+                "Match": {
+                    "Hosts": [
+                        "login.ricardoalcaraz.dev"
+                    ]
+                },
+                "Path": "{**catch-all}"
+            },
+            "apiRoute": {
+                "ClusterId": "apiCluster",
+                "Match": {
+                    "Hosts": [
+                        "api.ricardoalcaraz.dev"
+                    ]
+                },
+                "Path": "{**catch-all}"
+            }
+        },
+        "Clusters": {
+            "apiCluster": {
+                "Destinations": {
+                    "localAddress": {
+                        "Address": "http://localhost:5222"
+                    }
+                }
+            },
+            "authCluster": {
+                "Destinations": {
+                    "localAddress": {
+                        "Address": "http://localhost:5001"
+                    }
+                }
+            },
+            "mediaCluster": {
+                "Destinations": {
+                    "nas": {
+                        "Address": "http://192.168.1.194:12220"
+                    }
+                }
+            }
+        }
+    }
+}
