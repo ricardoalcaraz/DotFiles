@@ -5,14 +5,14 @@ _dotnet_zsh_complete()
   reply=( "${(ps:\n:)completions}" )
 }
 
-alias systemctl='sudo systemctl'
 alias scl='sudo systemctl'
-alias journalctl='sudo journalctl'
+alias scls='sudo systemctl status'
 alias scle='sudo systemctl enable'
 alias cpr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1'
 alias mvr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 --remove-source-files'
 alias ls='ls --color=auto'
 alias wake_huxley='wol 50:eb:f6:7e:d8:d2'
+alias jcl='sudo journalctl -fu'
 
 autoload -Uz compinit
 compinit
