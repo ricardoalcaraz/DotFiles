@@ -1,0 +1,8 @@
+[Unit]
+Description=Web cam streaming service to udp
+
+[Service]
+ExecStart=/usr/bin/ffmpeg -f v4l2 -video_size 1920x1080 -framerate 24 -input_format mjpeg -vaapi_device /dev/dri/renderD128 -i /dev/video0 -vf format='nv12|vaapi,hwupload' -c:v hevc_vaapi -movflags faststart -tag:v hvc1 -f ismv -qp 25 -y udp://192.168.1.21:5284
+
+[Install]
+WantedBy=network.target

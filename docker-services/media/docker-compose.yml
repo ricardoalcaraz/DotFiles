@@ -116,5 +116,19 @@ services:
     networks:
       - media
 
+  mysql_db:
+    image: "mysql:5.7"
+    container_name: ombi_mysql
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} #change your root password here
+    volumes:
+      -  ${DOCKER_ROOT}/mysql:/var/lib/mysql
+    networks:
+      - media
+
 networks:
   media:
