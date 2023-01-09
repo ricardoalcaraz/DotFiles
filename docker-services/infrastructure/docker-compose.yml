@@ -7,12 +7,11 @@ services:
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "55005:5432"
     volumes:
-      - ${DOCKER_STORAGE}/postgres/data:/var/lib/postgresql/data
+      - prod-db:/var/lib/postgresql/data
     restart: unless-stopped
-    networks:
-      - infrastructure
+
 
   # redis:
   #   container_name: redis
@@ -26,19 +25,41 @@ services:
   #   networks:
   #     - infrastructure
 
-  nats:
-    container_name: nats
-    image: nats:latest
+  registry:
+    restart: always
+    container_name: docker-registry
+    image: registry:2
+    volumes:
+      - /srv/docker-registry:/var/lib/registry
+
+  otel-collector:
+    image: otel/opentelemetry-collector
+    command: [ "--config=/etc/otel-collector-config.yml" ]
+    volumes:
+      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
     ports:
-      - "4222:4222"
-      - "8222:8222"
-      - "6222:6222"
-    restart: unless-stopped
-    networks:
-      - infrastructure
+      - "1888:1888"   # pprof extension
+      - "8888:8888"   # Prometheus metrics exposed by the collector
+      - "8889:8889"   # Prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP http receiver
+      - "55679:55679" # zpages extension
 
-networks:
-  infrastructure:
-    name: infrastructure
-    external: true
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: always
+    ports:
+      - "3000:3000"
 
+volumes:
+  prod-db:

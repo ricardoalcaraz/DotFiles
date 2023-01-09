@@ -1,0 +1,12 @@
+[Unit]
+Description=Mount Share at boot
+
+[Mount]
+What=//camus/linux/archlinux
+Where=/srv/archlinux
+Options=_netdev,iocharset=utf8,rw
+Type=cifs
+TimeoutSec=30
+
+[Install]
+WantedBy=multi-user.target
