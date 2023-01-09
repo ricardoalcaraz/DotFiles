@@ -1,0 +1,52 @@
+pkgname=dotnet-infrastructure
+pkgver=0
+pkgrel=1
+pkgdesc='Reverse proxy for internal services'
+arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+license=('GPL')
+url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
+makedepends=('dotnet-sdk')
+depends=('dotnet-runtime')
+source=("${pkgname}"::"git+file:///home/ralcaraz/RiderProjects/ricardoalcaraz.dev/")
+sha256sums=("SKIP")
+backup=("srv/$pkgname/appsettings.json")
+
+
+build()
+{
+    cd "${pkgname}"
+    dotnet restore 
+    dotnet publish -c Release -o $srcdir/$pkgname/GlobalGateway-${pkgver}.${pkgrel} RicardoAlcaraz.Services.GlobalGateway
+}
+
+package()
+{
+    #make users
+    mkdir -p $pkgdir/usr/lib/sysusers.d
+    echo 'u dotnet 843 "dotnet-api dedicated user"' > "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+    echo 'm dotnet http -' >> "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+    #echo 'm dotnet-infra postgres -' >> "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+
+    mkdir -p $pkgdir/srv/$pkgname
+    mkdir -p $pkgdir/opt/$pkgname/GlobalGateway
+    mkdir -p $pkgdir/etc/$pkgname
+
+    cp -r $srcdir/$pkgname/GlobalGateway-${pkgver}.${pkgrel}/* $pkgdir/opt/$pkgname/GlobalGateway
+    
+    cp $pkgdir/opt/$pkgname/GlobalGateway/appsettings.json $pkgdir/srv/$pkgname
+    cp $pkgdir/opt/$pkgname/GlobalGateway/yarp.json $pkgdir/etc/$pkgname
+    
+    chown -R 843:http $pkgdir/srv/$pkgname/
+    chown 843:http $pkgdir/etc/*
+
+    #chown -R 960:root $pkgdir/opt/$pkgname
+    #chmod -R 770 $pkgdir/srv/http/$pkgname
+    #chmod -R 770 $pkgdir/opt/$pkgname
+    #cp -r $srcdir/$pkgname/ApiGateway/bin/Release/net7.0/linux-x64/publish/* $pkgdir/srv/http/apigateway/
+    #chown 1230:http -R $pkgdir/srv/http/apigateway
+    install -Dm644 $srcdir/$pkgname/RicardoAlcaraz.Services.GlobalGateway/deploy/GlobalGateway.service $pkgdir/usr/lib/systemd/system/GlobalGateway.service
+}
+check()
+{
+    echo "Checks passed"
+}

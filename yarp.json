@@ -1,33 +1,15 @@
 {
     "ReverseProxy": {
         "Routes": {
-            "mediaRoute": {
-                "ClusterId": "mediaCluster",
-                "Match": {
-                    "Hosts": [
-                        "media.ricardoalcaraz.dev"
-                    ]
-                },
-                "Path": "{**catch-all}"
-            },
             "authRoute": {
                 "ClusterId": "authCluster",
                 "Match": {
                     "Hosts": [
-                        "login.ricardoalcaraz.dev"
+                        "id.ricardoalcaraz.dev"
                     ]
                 },
                 "Path": "{**catch-all}"
-            },
-            "apiRoute": {
-                "ClusterId": "apiCluster",
-                "Match": {
-                    "Hosts": [
-                        "api.ricardoalcaraz.dev"
-                    ]
-                },
-                "Path": "{**catch-all}"
-            }
+            }            
         },
         "Clusters": {
             "apiCluster": {

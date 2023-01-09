@@ -1,0 +1,46 @@
+pkgname=GlobalGateway
+pkgver=1.0
+pkgrel=1
+pkgdesc='Reverse proxy for internal services'
+arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+license=('GPL')
+url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
+makedepends=('dotnet-sdk')
+depends=('dotnet-runtime')
+source=("$pkgname"::"git+file:///home/ralcaraz/RiderProjects/ricardoalcaraz.dev")
+sha256sums=("SKIP")
+backup=("srv/http/$pkgname/appsettings.json")
+
+build()
+{
+    cd $srcdir/$pkgname/
+    #ls -al deploy
+    ls
+    dotnet publish -c Release -o $srcdir/$pkgname/publish -r linux-x64 --self-contained false RicardoAlcaraz.Services.GlobalGateway
+    cp ./deploy/${pkgname}.service $srcdir/$pkgname/publish
+}
+
+package()
+{
+    #make users
+    mkdir -p $pkgdir/usr/lib/sysusers.d
+    echo 'u gateway 961 "GlobalGateway dedicated user"' > "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+    echo 'm gateway http -' >> "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+    
+    mkdir -p $pkgdir/srv/http/$pkgname
+    mkdir -p $pkgdir/opt/$pkgname
+    
+    cp -r $srcdir/$pkgname/publish/* $pkgdir/opt/$pkgname
+    
+    mv $pkgdir/opt/$pkgname/appsettings.json $pkgdir/srv/http/$pkgname
+    mv $pkgdir/opt/$pkgname/yarp.json $pkgdir/srv/http/$pkgname
+    cd $pkgdir/srv/http/$pkgname
+    
+    chown -R 1230:http $pkgdir/srv/http/$pkgname
+    chown -R 1230:http $pkgdir/opt/$pkgname
+    chmod -R 770 $pkgdir/srv/http/$pkgname
+    chmod -R 770 $pkgdir/opt/$pkgname
+    #cp -r $srcdir/$pkgname/ApiGateway/bin/Release/net7.0/linux-x64/publish/* $pkgdir/srv/http/apigateway/
+    #chown 1230:http -R $pkgdir/srv/http/apigateway
+    install -Dm644  $srcdir/$pkgname/publish/${pkgname}.service $pkgdir/usr/lib/systemd/system/${pkgname}.service
+}
