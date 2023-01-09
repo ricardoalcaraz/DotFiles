@@ -31,7 +31,8 @@ services:
     image: registry:2
     volumes:
       - /srv/docker-registry:/var/lib/registry
-
+    ports:
+      - "5000:5000"
   otel-collector:
     image: otel/opentelemetry-collector
     command: [ "--config=/etc/otel-collector-config.yml" ]
@@ -52,14 +53,20 @@ services:
     restart: always
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - /srv/prometheus/data:/data
     ports:
       - "9090:9090"
+    network_mode: "host"
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/data"]
   grafana:
     container_name: grafana
     image: grafana/grafana
     restart: always
+    volumes:
+      - /srv/grafana:/var/lib/grafana
     ports:
       - "3000:3000"
 
 volumes:
   prod-db:
+  otel-db:
