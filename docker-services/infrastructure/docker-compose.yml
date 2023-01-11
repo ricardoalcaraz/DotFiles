@@ -5,7 +5,7 @@ services:
     container_name: personal-registry
     image: registry:latest
     volumes:
-      - ${DOCKER_ROOT}/registry:/var/lib/registry
+      - ${DOCKER_ROOT}/docker-registry:/var/lib/registry
     ports:
       - "32896:5000"
     restart: unless-stopped
@@ -21,7 +21,7 @@ services:
       - BADGER_DIRECTORY_VALUE=/badger/data
       - BADGER_DIRECTORY_KEY=/badger/key
       - METRICS_STORAGE_TYPE=prometheus
-      - PROMETHEUS_SERVER_URL=http://localhost:9090
+      - PROMETHEUS_SERVER_URL=http://bradbury.local:9090
     volumes:
       - ${DOCKER_ROOT}/jaegar:/badger
     network_mode: host
