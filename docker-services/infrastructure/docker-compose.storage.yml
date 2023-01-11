@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  registry:
+    container_name: personal-registry
+    image: registry:latest
+    volumes:
+      - ${DOCKER_ROOT}/docker-registry:/var/lib/registry
+    ports:
+      - "32896:5000"
+    restart: unless-stopped
+
+  jaegar:
+    image: jaegertracing/all-in-one
+    container_name: jaegar
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+      - COLLECTOR_OTLP_ENABLED=true
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false
+      - BADGER_DIRECTORY_VALUE=/badger/data
+      - BADGER_DIRECTORY_KEY=/badger/key
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://bradbury.local:9090
+    volumes:
+      - ${DOCKER_ROOT}/jaegar:/badger
+    network_mode: host
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: always
+    volumes:
+      - ${DOCKER_ROOT}/grafana:/var/lib/grafana
+    ports:
+      - "3000:3000"
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${DOCKER_ROOT}/prometheus:/data
+    ports:
+      - "9090:9090"
+    network_mode: "host"
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/data"]

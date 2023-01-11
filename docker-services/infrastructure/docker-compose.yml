@@ -1,42 +1,6 @@
 version: "3.7"
 
 services:
-  registry:
-    container_name: personal-registry
-    image: registry:latest
-    volumes:
-      - ${DOCKER_ROOT}/docker-registry:/var/lib/registry
-    ports:
-      - "32896:5000"
-    restart: unless-stopped
-
-  jaegar:
-    image: jaegertracing/all-in-one
-    container_name: jaegar
-    environment:
-      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
-      - COLLECTOR_OTLP_ENABLED=true
-      - SPAN_STORAGE_TYPE=badger
-      - BADGER_EPHEMERAL=false
-      - BADGER_DIRECTORY_VALUE=/badger/data
-      - BADGER_DIRECTORY_KEY=/badger/key
-      - METRICS_STORAGE_TYPE=prometheus
-      - PROMETHEUS_SERVER_URL=http://bradbury.local:9090
-    volumes:
-      - ${DOCKER_ROOT}/jaegar:/badger
-    network_mode: host
-    ports:
-      - "6831:6831"   # pprof extension
-      - "6832:6832"   # Prometheus metrics exposed by the collector
-      - "5778:5778"   # Prometheus exporter metrics
-      - "16686:16686" # health_check extension
-      - "4317:4317"   # OTLP gRPC receiver
-      - "4318:4318"   # OTLP http receiver
-      - "14250:14250" # zpages extension
-      - "14268:14268" # accept jaeger.thrift directly from clients
-      - "14269:14269" # accept model.proto
-      - "9411:9411" # Zipkin compatible endpoint (optional)
-
   node-exporter:
     privileged: true
     image: prom/node-exporter
