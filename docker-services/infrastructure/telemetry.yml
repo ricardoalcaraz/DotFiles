@@ -1,0 +1,15 @@
+  jaegar:
+    image: jaegertracing/all-in-one
+    container_name: jaegar
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+      - COLLECTOR_OTLP_ENABLED=true
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false
+      - BADGER_DIRECTORY_VALUE=/badger/data
+      - BADGER_DIRECTORY_KEY=/badger/key
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://bradbury.local:9090
+    volumes:
+      - ${DOCKER_ROOT}/jaegar:/badger
+    network_mode: host
