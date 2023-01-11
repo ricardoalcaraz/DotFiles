@@ -1,72 +1,55 @@
 version: "3.7"
 
 services:
-  db:
-    container_name: postgres
-    image: postgres:latest
-    environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    ports:
-      - "55005:5432"
+  registry:
+    container_name: personal-registry
+    image: registry:latest
     volumes:
-      - prod-db:/var/lib/postgresql/data
+      - ${DOCKER_ROOT}/registry:/var/lib/registry
+    ports:
+      - "32896:5000"
     restart: unless-stopped
 
-
-  # redis:
-  #   container_name: redis
-  #   image: redis:latest
-  #   ports: 
-  #     - "6379:6379"
-  #   volumes: 
-  #     - ${DOCKER_STORAGE}/redis:/data
-  #   command: redis-server --save 60 1 --loglevel warning
-  #   restart: unless-stopped
-  #   networks:
-  #     - infrastructure
-
-  registry:
-    restart: always
-    container_name: docker-registry
-    image: registry:2
+  jaegar:
+    image: jaegertracing/all-in-one
+    container_name: jaegar
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+      - COLLECTOR_OTLP_ENABLED=true
+      - SPAN_STORAGE_TYPE=badger
+      - BADGER_EPHEMERAL=false
+      - BADGER_DIRECTORY_VALUE=/badger/data
+      - BADGER_DIRECTORY_KEY=/badger/key
+      - METRICS_STORAGE_TYPE=prometheus
+      - PROMETHEUS_SERVER_URL=http://localhost:9090
     volumes:
-      - /srv/docker-registry:/var/lib/registry
+      - ${DOCKER_ROOT}/jaegar:/badger
+    network_mode: host
     ports:
-      - "5000:5000"
-  otel-collector:
-    image: otel/opentelemetry-collector
-    command: [ "--config=/etc/otel-collector-config.yml" ]
-    volumes:
-      - ./otel-collector-config.yml:/etc/otel-collector-config.yml
-    ports:
-      - "1888:1888"   # pprof extension
-      - "8888:8888"   # Prometheus metrics exposed by the collector
-      - "8889:8889"   # Prometheus exporter metrics
-      - "13133:13133" # health_check extension
+      - "6831:6831"   # pprof extension
+      - "6832:6832"   # Prometheus metrics exposed by the collector
+      - "5778:5778"   # Prometheus exporter metrics
+      - "16686:16686" # health_check extension
       - "4317:4317"   # OTLP gRPC receiver
       - "4318:4318"   # OTLP http receiver
-      - "55679:55679" # zpages extension
+      - "14250:14250" # zpages extension
+      - "14268:14268" # accept jaeger.thrift directly from clients
+      - "14269:14269" # accept model.proto
+      - "9411:9411" # Zipkin compatible endpoint (optional)
 
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus:latest
-    restart: always
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      - /srv/prometheus/data:/data
+  node-exporter:
+    privileged: true
+    image: prom/node-exporter
+    container_name: node-exporter
+    restart: unless-stopped
     ports:
-      - "9090:9090"
-    network_mode: "host"
-    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/data"]
-  grafana:
-    container_name: grafana
-    image: grafana/grafana
-    restart: always
+      - "9100:9100"
     volumes:
-      - /srv/grafana:/var/lib/grafana
-    ports:
-      - "3000:3000"
-
-volumes:
-  prod-db:
-  otel-db:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points"
+      - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
