@@ -1,0 +1,36 @@
+pkgname=Pacman.NET
+pkgver=0
+pkgrel=1
+pkgdesc='Arch Linux package cache and repository'
+arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+url="https://github.com/ricardoalcaraz/Pacman.NET"
+source=("${pkgname}"::"git+rsync:///")
+depends=('dotnet-runtime' 'aspnet-runtime')
+b2sums=('SKIP')
+backup=('/etc/pacman.d/mirrorlist')
+
+build() {
+  return 0
+}
+
+check() {
+  dotnet test
+}
+
+package() {
+    mkdir -p /srv/Pacman.NET/cache
+    mkdir -p /srv/Pacman.NET/sync
+    mkdir -p /srv/Pacman.NET/repositories
+    chmod -R 775 /srv/Pacman.NET
+
+    #create symbolic link back to original
+    mv /etc/pacman.d/mirrorlist > /srv/Pacman.NET/mirrorlist
+    ln -s /srv/Pacman.NET/mirrorlist /etc/pacman.d/mirrorlist
+    chown root:root /etc/pacman.d/mirrorlist
+    chmod 444 /etc/package.d/mirrorlist
+
+    chmod 664 /srv/Pacman.NET/mirrorlist
+    chmod 664 /srv/Pacman.NET/appsettings.json
+
+    chown -R root:pacman.net /srv/Pacman.NET
+}

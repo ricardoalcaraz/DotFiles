@@ -1,0 +1,6 @@
+[Unit]
+Description=Automated daily backup
+
+[Service]
+Type=oneshot
+ExecStart=sh -c '/usr/bin/rsync -aAXHvS --quiet --delete --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found","/home/*/.cache/*","*/node_modules/*","/srv/deluge/*","/var/lib/docker/overlay2/*"} / /mnt/1TB/backup'

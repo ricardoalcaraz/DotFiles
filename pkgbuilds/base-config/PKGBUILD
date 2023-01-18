@@ -1,0 +1,28 @@
+pkgname=base-config
+pkgver=0
+pkgrel=1
+pkgdesc='Base services and configuration'
+arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
+source=("${pkgname}"::"git+rsync:///")
+depends=('dotnet-runtime' 'aspnet-runtime')
+b2sums=('SKIP')
+backup=('/etc/pacman.d/mirrorlist')
+
+build() {
+  return 0
+}
+
+check() {
+  dotnet test
+}
+
+package() {
+    install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
+    install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
+    install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
+    install -D -g Pacman.NET /etc/pacman.conf.d/10-Pacman.NET.conf
+
+    #create symbolic link back to original
+    chmod -R 775 /srv/Pacman.NET
+}

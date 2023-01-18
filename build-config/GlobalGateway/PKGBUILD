@@ -1,13 +1,12 @@
 pkgname=dotnet-infrastructure
 pkgver=0
 pkgrel=1
-pkgdesc='Reverse proxy for internal services'
+'Reverse proxy for internal services'
 arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 license=('GPL')
 url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
 makedepends=('dotnet-sdk')
 depends=('dotnet-runtime')
-source=("${pkgname}"::"git+file:///home/ralcaraz/RiderProjects/ricardoalcaraz.dev/")
 sha256sums=("SKIP")
 backup=("srv/$pkgname/appsettings.json")
 

@@ -2,8 +2,8 @@
 Description=Mount Share at boot
 
 [Mount]
-What=//camus/linux/archlinux
-Where=/srv/archlinux
+What=//camus/linux/
+Where=/srv/nas/
 Options=_netdev,iocharset=utf8,rw
 Type=cifs
 TimeoutSec=30
