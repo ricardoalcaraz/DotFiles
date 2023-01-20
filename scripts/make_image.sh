@@ -169,11 +169,12 @@ PASSWORD='$6$JSo5/ilmMIMbr5fO$i3SgYoZl1G8hXsaZQA5rY3h75VMsN.FjZmb7utFYvSOT8DIN9b
 pacman -S --noconfirm zsh
 usermod -s /usr/bin/zsh root
 useradd -G http,wheel -s /usr/bin/zsh -p $PASSWORD -m ralcaraz
-mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
-echo 'Server = https://ricardoalcaraz.dev' > /etc/pacman.d/mirrorlist
+echo 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/99-no_wheel_password
-ssh-keygen -f ~/.ssh/id_rsa -P ''
-cat ~/.ssh/id_rsa.pub
+ssh-keygen -f /root/.ssh/id_rsa -P ''
+cat /root/.ssh/id_rsa.pub
+ln -s /root/.ssh/authorized_keys /home/ralcaraz/.ssh/authorized_keys
+chown ralcaraz:ralcaraz /home/ralcaraz/.ssh/authorized_keys
 EOF
 
 chmod 755 /mnt/post_install.sh
