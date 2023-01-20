@@ -4,33 +4,35 @@ pkgrel=1
 pkgdesc='Arch Linux package cache and repository'
 arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/ricardoalcaraz/Pacman.NET"
-source=("${pkgname}"::"git+rsync:///")
+source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/Pacman.NET.git")
 depends=('dotnet-runtime' 'aspnet-runtime')
 b2sums=('SKIP')
-backup=('/etc/pacman.d/mirrorlist')
+backup=('etc/pacman.d/mirrorlist')
 
 build() {
-  return 0
+  cd $srcdir/$pkgname/$pkgname
+  dotnet publish -o $srcdir/publish/$pkgname
 }
 
 check() {
-  dotnet test
+  cd $srcdir/$pkgname
+  #dotnet test
 }
 
 package() {
-    mkdir -p /srv/Pacman.NET/cache
-    mkdir -p /srv/Pacman.NET/sync
-    mkdir -p /srv/Pacman.NET/repositories
-    chmod -R 775 /srv/Pacman.NET
-
+  mkdir -p $pkgdir/usr/lib/sysusers.d
+  echo 'u pacnet 1420 "Pacman.NET dedicated user"' > "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+  echo 'm pacnet http -' >> "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
+  cd $srcdir/publish/
+  mkdir -p $pkgdir/srv/http
+  mv $pkgname $pkgdir/srv/http/$pkgname
+  chown -R 1420:http $pkgdir/srv/http/$pkgname
+  chmod 775 -R $pkgdir/srv/http/$pkgname
     #create symbolic link back to original
-    mv /etc/pacman.d/mirrorlist > /srv/Pacman.NET/mirrorlist
-    ln -s /srv/Pacman.NET/mirrorlist /etc/pacman.d/mirrorlist
-    chown root:root /etc/pacman.d/mirrorlist
-    chmod 444 /etc/package.d/mirrorlist
+    #mv /etc/pacman.d/mirrorlist > /srv/Pacman.NET/mirrorlist
+    #ln -s /srv/Pacman.NET/mirrorlist /etc/pacman.d/mirrorlist
+    #chown root:root /etc/pacman.d/mirrorlist
+    #chmod 444 /etc/package.d/mirrorlist
+  install -Dm644  $srcdir/$pkgname/$pkgname/deploy/$pkgname.service $pkgdir/usr/lib/systemd/system/$pkgname.service
 
-    chmod 664 /srv/Pacman.NET/mirrorlist
-    chmod 664 /srv/Pacman.NET/appsettings.json
-
-    chown -R root:pacman.net /srv/Pacman.NET
 }

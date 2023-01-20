@@ -10,6 +10,9 @@ b2sums=('SKIP')
 backup=('/etc/pacman.d/mirrorlist')
 
 build() {
+  cd $srcdir/Pacman.NET
+  pwd
+  
   return 0
 }
 
