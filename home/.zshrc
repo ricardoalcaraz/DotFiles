@@ -4,9 +4,10 @@ alias scle='sudo systemctl enable'
 alias cpr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1'
 alias mvr='rsync --archive -hh --partial --info=stats1 --info=progress2 --modify-window=1 --remove-source-files'
 alias ls='ls --color=auto'
-alias wake_huxley='wol 50:eb:f6:7e:d8:d2'
 alias jcl='sudo journalctl -fu'
-
+alias wake_camus='wol 00:11:32:cd:d4:ad'
+alias wake_bradbury='wol 94:c6:91:a2:0b:da'
+alias wake_huxley='wol 50:eb:f6:7e:d8:d2'
 autoload -Uz compinit
 compinit
 
