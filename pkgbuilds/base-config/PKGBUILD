@@ -4,10 +4,11 @@ pkgrel=1
 pkgdesc='Base services and configuration'
 arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
 url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
-source=("${pkgname}"::"git+rsync:///")
+source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/ricardoalcaraz.dev")
 depends=('dotnet-runtime' 'aspnet-runtime')
+make-depends=('dotnet-sdk')
 b2sums=('SKIP')
-backup=('/etc/pacman.d/mirrorlist')
+backup=('etc/pacman.d/mirrorlist' 'etc/pacman.conf')
 
 build() {
   cd $srcdir/Pacman.NET
@@ -21,11 +22,18 @@ check() {
 }
 
 package() {
-    install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
-    install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
-    install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
-    install -D -g Pacman.NET /etc/pacman.conf.d/10-Pacman.NET.conf
+  #set mirror to personal and use reflector for more
+  echo 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch' > $pkgdir/etc/pacmand.d/mirrorlist
+  reflector -n 6 -l 6 --score 6 -f 6 -c US --threads 4 >> /etc/pacmand.d/mirrorlist
+  install -D -m664 Pacman.NET $pkgdir/etc/pacman.conf.d/10-Pacman.NET.conf
+  #echo '[ricardoalcaraz.dev]\nServer = https://ricardoalcaraz.dev/archlinux/$repo' >> $pkgdir/etc/pacman.conf.d/10-Pacman.NET.conf
 
-    #create symbolic link back to original
-    chmod -R 775 /srv/Pacman.NET
+  #install backup services
+  
+  #install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
+  #install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
+  #install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
+
+  #create symbolic link back to original
+  chmod -R 775 /srv/Pacman.NET
 }
