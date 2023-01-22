@@ -173,6 +173,8 @@ echo 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch' > /etc/pacma
 echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/99-no_wheel_password
 ssh-keygen -f /root/.ssh/id_rsa -P ''
 cat /root/.ssh/id_rsa.pub
+mkdir -p /home/ralcaraz/.ssh
+chown ralcaraz:ralcaraz /home/ralcaraz/.ssh
 ln -s /root/.ssh/authorized_keys /home/ralcaraz/.ssh/authorized_keys
 chown ralcaraz:ralcaraz /home/ralcaraz/.ssh/authorized_keys
 EOF
