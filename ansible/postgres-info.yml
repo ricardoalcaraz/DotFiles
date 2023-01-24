@@ -1,0 +1,15 @@
+- name: All hosts up-to-date
+  hosts: control managed
+  become: yes
+  tasks:
+    - name: Collect PostgreSQL version and extensions
+      become: true
+      become_user: postgres
+      community.postgresql.postgresql_info:
+        filter: ver*,ext*
+
+    - name: Collect all info except settings and roles
+      become: true
+      become_user: postgres
+      community.postgresql.postgresql_info:
+        filter: "!settings,!roles"

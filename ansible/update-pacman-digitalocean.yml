@@ -1,0 +1,15 @@
+- name: All hosts up-to-date
+  hosts: digitalocean
+  tasks:
+    - name: full system upgrade
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Upgrade package foo
+      # The 'changed' state of this call will indicate whether the cache was
+      # updated *or* whether foo was installed/upgraded.
+      community.general.pacman:
+        name: Pacman.NET
+        state: latest
+        update_cache: true

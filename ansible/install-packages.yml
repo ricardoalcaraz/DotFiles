@@ -1,0 +1,11 @@
+- name: All hosts up-to-date
+  hosts: control
+  become: yes
+  tasks:
+    - name: Upgrade package foo
+      # The 'changed' state of this call will indicate whether the cache was
+      # updated *or* whether foo was installed/upgraded.
+      community.general.pacman:
+        name: foo
+        state: latest
+        update_cache: true

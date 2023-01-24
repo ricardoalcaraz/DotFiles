@@ -1,0 +1,13 @@
+[control]
+localhost ansible_connection=local
+
+[managed]
+huxley-local
+puck
+
+[digitalocean]
+root@165.232.140.211
+root@164.90.153.230
+root@143.198.234.192
+root@24.199.112.152
+root@147.182.246.213

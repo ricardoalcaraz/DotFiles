@@ -1,0 +1,30 @@
+- name: Initialize users
+  hosts: digitalocean
+  tasks:
+    - name: Add the user 'ralcaraz'
+      ansible.builtin.user:
+        name: ralcaraz
+        password: '$6$yURmU3fupvUAwulA$ld9x6y87oRf0IDM5LDa0ON24KW2L/tfghgHdCbg/XPNBgYbC.mOVPmGwsdfLuOqA83Dr7D75yby.QZPQbpvTC1'
+        shell: /usr/bin/zsh
+        groups: wheel,http
+        append: yes
+    - lineinfile:
+        path: /etc/sudoers.d/wheel-allow-all
+        state: present
+        line: "%wheel ALL=(ALL:ALL) NOPASSWD: ALL"
+        validate: /usr/sbin/visudo -cf %s
+        create: yes
+
+    - user: name=aur_builder
+
+    - lineinfile:
+        path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
+        state: present
+        line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+        validate: /usr/sbin/visudo -cf %s
+        create: yes
+
+    - name: Install package foo from repo
+      community.general.pacman:
+        name: foo
+        state: present
