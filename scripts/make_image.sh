@@ -176,7 +176,6 @@ cat /root/.ssh/id_rsa.pub
 mkdir -p /home/ralcaraz/.ssh
 chown ralcaraz:ralcaraz /home/ralcaraz/.ssh
 ln -s /root/.ssh/authorized_keys /home/ralcaraz/.ssh/authorized_keys
-chown ralcaraz:ralcaraz /home/ralcaraz/.ssh/authorized_keys
 EOF
 
 chmod 755 /mnt/post_install.sh

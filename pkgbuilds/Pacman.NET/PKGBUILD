@@ -5,7 +5,8 @@ pkgdesc='Arch Linux package cache and repository'
 arch=('x86_64')
 url="https://github.com/ricardoalcaraz/Pacman.NET"
 source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/Pacman.NET.git" '20-pacnet.conf' '20-sudo' '20-pacman.conf')
-depends=('dotnet-runtime' 'aspnet-runtime' 'reflector' 'dotnet-sdk' 'openssh' 'git' 'rsync')
+makedepends=('dotnet-sdk')
+depends=('dotnet-runtime' 'aspnet-runtime' 'reflector' 'openssh' 'git' 'rsync')
 b2sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
 backup=('etc/pacman.d/mirrorlist')
 

@@ -29,6 +29,9 @@ package() {
   #install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
   #install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
   echo "aur-builder ALL=(ALL) NOPASSWD: /usr/bin/pacman" > $pkgdir/etc/sudoers.d/aur-builder.conf
+  mkdir /srv/http/uploads
+  chown root:http /srv/http/uploads
+  chmod 775 /srv/http/uploads
 
   #create symbolic link back to original
   chmod -R 775 /srv/Pacman.NET
