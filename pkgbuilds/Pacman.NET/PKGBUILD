@@ -2,14 +2,17 @@ pkgname=Pacman.NET
 pkgver=0
 pkgrel=1
 pkgdesc='Arch Linux package cache and repository'
-arch=('x86_64' 'arm' 'armv6h' 'armv7h' 'aarch64')
+arch=('x86_64')
 url="https://github.com/ricardoalcaraz/Pacman.NET"
-source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/Pacman.NET.git")
-depends=('dotnet-runtime' 'aspnet-runtime')
-b2sums=('SKIP')
+source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/Pacman.NET.git" '20-pacnet.conf' '20-sudo' '20-pacman.conf')
+depends=('dotnet-runtime' 'aspnet-runtime' 'reflector' 'dotnet-sdk' 'openssh' 'git' 'rsync')
+b2sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
 backup=('etc/pacman.d/mirrorlist')
 
 build() {
+  pwd
+  ls -al 
+  ls -al $srcdir/$pkgname
   cd $srcdir/$pkgname/$pkgname
   dotnet publish -o $srcdir/publish/$pkgname
 }
@@ -20,19 +23,14 @@ check() {
 }
 
 package() {
-  mkdir -p $pkgdir/usr/lib/sysusers.d
-  echo 'u pacnet 1420 "Pacman.NET dedicated user"' > "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
-  echo 'm pacnet http -' >> "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
-  cd $srcdir/publish/
-  mkdir -p $pkgdir/srv/http
-  mv $pkgname $pkgdir/srv/http/$pkgname
-  chown -R 1420:http $pkgdir/srv/http/$pkgname
-  chmod 775 -R $pkgdir/srv/http/$pkgname
-    #create symbolic link back to original
-    #mv /etc/pacman.d/mirrorlist > /srv/Pacman.NET/mirrorlist
-    #ln -s /srv/Pacman.NET/mirrorlist /etc/pacman.d/mirrorlist
-    #chown root:root /etc/pacman.d/mirrorlist
-    #chmod 444 /etc/package.d/mirrorlist
-  install -Dm644  $srcdir/$pkgname/$pkgname/deploy/$pkgname.service $pkgdir/usr/lib/systemd/system/$pkgname.service
+  install -Dm644 $srcdir/20-pacnet.conf $pkgdir/usr/lib/sysusers.d/$pkgname.conf
+  install -Dm644 $srcdir/20-sudo $pkgdir/etc/sudoers.d/$pkgname
+  install -Dm644 $srcdir/20-pacman.conf $pkgdir/etc/pacman.conf.d/$pkgname.conf
+  install -Dm644 $srcdir/$pkgname/$pkgname/deploy/$pkgname.service $pkgdir/usr/lib/systemd/system/$pkgname.service
 
+  mkdir -p $pkgdir/srv/http
+  mv $srcdir/publish/$pkgname $pkgdir/srv/http
+  chown -R 1420:http $pkgdir/srv/http/$pkgname
+  chmod 775 $pkgdir/srv/http/$pkgname
+  chmod 660 $pkgdir/srv/http/$pkgname/*.json
 }

@@ -1,5 +1,5 @@
 - name: All hosts up-to-date
-  hosts: control managed
+  hosts: arch-servers
   become: yes
   tasks:
     - name: Collect PostgreSQL version and extensions

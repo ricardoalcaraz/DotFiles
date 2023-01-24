@@ -18,17 +18,17 @@ build() {
 
 
 package() {
-  #set mirror to personal and use reflector for more
-  install -D -m644 mirrorlist $pkgdir/etc/pacman.d/mirrorlist
   #reflector -n 6 -l 6 --score 6 -f 6 -c US --threads 4 >> /etc/pacmand.d/mirrorlist
   install -D -m644 10-Pacman.NET.conf $pkgdir/etc/pacman.conf.d/10-Pacman.NET.conf
   #echo '[ricardoalcaraz.dev]\nServer = https://ricardoalcaraz.dev/archlinux/$repo' >> $pkgdir/etc/pacman.conf.d/10-Pacman.NET.conf
-
+# echo 'aur-builder 1000 "Pacman.NET dedicated user"' > /etc/
+# m Pacman.NET http -
   #install backup services
   
   #install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
   #install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
   #install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
+  echo "aur-builder ALL=(ALL) NOPASSWD: /usr/bin/pacman" > $pkgdir/etc/sudoers.d/aur-builder.conf
 
   #create symbolic link back to original
   chmod -R 775 /srv/Pacman.NET
