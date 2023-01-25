@@ -1,0 +1,32 @@
+pkgname=Identity
+pkgver=0
+pkgrel=1
+pkgdesc='Identity services'
+arch=('x86_64')
+url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
+source=("git+https://github.com/ricardoalcaraz/ricardoalcaraz.dev.git" "20-dotnet.conf" "Identity.service")
+makedepends=('dotnet-sdk')
+depends=('dotnet-runtime' 'aspnet-runtime')
+b2sums=('SKIP' 'SKIP' 'SKIP')
+backup=('etc/pacman.d/mirrorlist')
+
+build() {
+  cd RicardoAlcaraz.Services.$pkgname
+  dotnet publish -o $srcdir/publish/$pkgname
+}
+
+check() {
+  cd $srcdir/$pkgname
+}
+
+package() {
+install -Dm644 $srcdir/20-dotnet.conf $pkgdir/usr/lib/sysusers.d/$pkgname.conf
+  install -Dm644 $srcdir/$pkgname.service $pkgdir/usr/lib/systemd/system/$pkgname.service
+  mkdir -p $pkgdir/srv/http
+  touch $pkgdir/srv/http/secrets.json
+  touch $pkgdir/srv/http/Duende_License.key
+  mv $srcdir/publish/$pkgname $pkgdir/srv/http
+  chown -R 1420:http $pkgdir/srv/http/$pkgname
+  chmod 775 $pkgdir/srv/http/$pkgname
+  chmod 660 $pkgdir/srv/http/$pkgname/*.json
+}
