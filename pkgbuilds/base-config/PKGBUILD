@@ -24,15 +24,12 @@ package() {
 # echo 'aur-builder 1000 "Pacman.NET dedicated user"' > /etc/
 # m Pacman.NET http -
   #install backup services
-  
+  install -d -m 555 notifyme.sh $pkgdir/usr/bin/notifyme
   #install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
   #install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
   #install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
-  echo "aur-builder ALL=(ALL) NOPASSWD: /usr/bin/pacman" > $pkgdir/etc/sudoers.d/aur-builder.conf
-  mkdir /srv/http/uploads
-  chown root:http /srv/http/uploads
-  chmod 775 /srv/http/uploads
-
-  #create symbolic link back to original
-  chmod -R 775 /srv/Pacman.NET
+  #echo "aur-builder ALL=(ALL) NOPASSWD: /usr/bin/pacman" > $pkgdir/etc/sudoers.d/aur-builder.conf
+  mkdir -p $pkgdir/srv/http/uploads
+  chown root:http $pkgdir/srv/http/uploads
+  chmod -R 775 $pkgdir/srv/http/uploads
 }
