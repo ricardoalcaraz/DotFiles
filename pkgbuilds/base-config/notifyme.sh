@@ -1,1 +1,1 @@
-echo "Notify args ${0} ${1} ${2}"
+echo "${1} ${2}" >> /var/log/ups-events.log

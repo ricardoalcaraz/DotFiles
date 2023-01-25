@@ -1,0 +1,5 @@
+[Unit]
+Description=Backs up uploaded files
+
+[Service]
+ExecStart=/usr/bin/rsync -a -e ssh --delete --quiet /srv/http/uploads/* camus-root:/volume2/linux/uploads/
