@@ -7,8 +7,9 @@ huxley-root
 puck-root
 
 [digitalocean]
+#amd droplet
+137.184.247.161
+#intel droplet
 24.199.76.7
-165.232.140.211
-143.198.234.192
-24.199.69.107
-147.182.246.213
+#basic droplet
+164.90.244.144
