@@ -1,7 +1,11 @@
 - name: All hosts up-to-date
   hosts: digitalocean
   become: yes
+
+
   tasks:
+      
+
     - name: Install basic
       # The 'changed' state of this call will indicate whether the cache was
       # updated *or* whether foo was installed/upgraded.
@@ -13,6 +17,7 @@
           - prometheus-node-exporter
           - htop
           - vim
+          -
         state:        latest
         update_cache: true
         
