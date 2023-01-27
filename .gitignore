@@ -4,3 +4,7 @@
 id_rsa
 id_rsa.pub
 .env-prod
+cert.pem
+priv.pem
+chain.pem
+*.pfx

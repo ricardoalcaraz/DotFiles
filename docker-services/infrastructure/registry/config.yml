@@ -1,0 +1,26 @@
+version: 0.1
+log:
+  level: debug
+  formatter: text
+  fields:
+    service: registry
+    environment: staging
+storage:
+  inmemory:
+http:
+  addr: https://*
+  prefix: /
+  host: https://registry.ricardoalcaraz.dev
+  debug:
+    prometheus:
+      enabled: true
+      path: /metrics
+  headers:
+    X-Content-Type-Options: [nosniff]
+  http2:
+    disabled: false
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
