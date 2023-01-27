@@ -6,9 +6,9 @@ log:
     service: registry
     environment: staging
 storage:
-  inmemory:
+  filesystem:
+    rootdirectory: /var/lib/registry
 http:
-  addr: https://*
   prefix: /
   host: https://registry.ricardoalcaraz.dev
   debug:
