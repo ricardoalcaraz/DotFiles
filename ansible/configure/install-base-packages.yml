@@ -1,0 +1,6 @@
+- name: Install and configure base packages
+  hosts: all
+  become: true
+  tasks:
+    
+

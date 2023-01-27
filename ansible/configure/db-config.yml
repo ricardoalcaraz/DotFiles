@@ -1,0 +1,9 @@
+- name: Install and configure postgres and redis
+  hosts: all
+  become: true
+  tasks: 
+  - name: Start and enable nginx service
+    service:
+      name: nginx
+      state: started
+      enabled: yes

@@ -1,0 +1,17 @@
+- name: Configure pacman
+  hosts: digitalocean
+  become: true
+  become_user: root
+  vars:
+    pacman_config:
+      ILoveCandy: "True"
+      ParallelDownloads: 6
+    mirrorlist:
+      - 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch'
+
+    - name: Update mirrorlist
+      lineinfile:
+        dest: /etc/pacman.d/mirrorlist
+        regexp: "^Server"
+        line: "{{ item }}"
+      with_items: "{{ mirrorlist }}"

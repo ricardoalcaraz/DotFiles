@@ -8,8 +8,8 @@ puck-root
 
 [digitalocean]
 #amd droplet
-137.184.247.161
+root@137.184.247.161
 #intel droplet
-24.199.76.7
+root@24.199.76.7
 #basic droplet
-164.90.244.144
+root@164.90.244.144

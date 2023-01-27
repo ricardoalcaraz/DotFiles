@@ -7,7 +7,7 @@
 # From:       https://archlinux.org/mirrors/status/json/
 # Retrieved:  2023-01-21 02:29:08 UTC
 # Last Check: 2023-01-21 02:23:54 UTC
-Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch
+Server = https://mirror.ricardoalcaraz.dev/archlinux/$repo/os/$arch
 Server = https://mirror.lty.me/archlinux/$repo/os/$arch
 Server = rsync://zxcvfdsa.com/arch/$repo/os/$arch
 Server = https://mirror.dal10.us.leaseweb.net/archlinux/$repo/os/$arch

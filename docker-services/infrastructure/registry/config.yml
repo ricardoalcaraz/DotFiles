@@ -5,9 +5,6 @@ log:
   fields:
     service: registry
     environment: staging
-storage:
-  filesystem:
-    rootdirectory: /var/lib/registry
 http:
   prefix: /
   host: https://registry.ricardoalcaraz.dev
