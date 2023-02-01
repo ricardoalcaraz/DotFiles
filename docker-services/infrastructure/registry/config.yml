@@ -7,7 +7,7 @@ log:
     environment: staging
 http:
   prefix: /
-  host: https://registry.ricardoalcaraz.dev
+  host: http://registry.ricardoalcaraz.dev
   debug:
     prometheus:
       enabled: true
