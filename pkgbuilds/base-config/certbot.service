@@ -3,4 +3,5 @@ Description=Let's Encrypt renewal
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/certbot renew --quiet --agree-tos
+ExecStart=/usr/bin/certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/certbot-creds.ini -d 'ricardoalcaraz.dev' -d '*.ricardoalcaraz.dev' --agree-tos -m mail@ricardoalcaraz.dev
+ExecStart=/usr/bin/certbot certonly --dns-digitalocean --dns-digitalocean-credentials ~/certbot-creds.ini -d '*.yeska.love' -d 'yeska.love' --agree-tos -m mail@ricardoalcaraz.dev

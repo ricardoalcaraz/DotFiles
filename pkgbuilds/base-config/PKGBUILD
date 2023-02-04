@@ -5,10 +5,10 @@ pkgdesc='Base services and configuration'
 arch=('x86_64')
 url="https://github.com/ricardoalcaraz/ricardoalcaraz.dev"
 source=("10-pacman.conf" "notifyme.sh" "backup-uploads.path" "backup-uploads.service")
-depends=('dotnet-runtime' 'aspnet-runtime' 'wol' 'htop' 'vim')
+depends=('dotnet-runtime' 'aspnet-runtime' 'wol' 'htop' 'vim' 'reflector' 'openssh' 'neofetch')
 makedepends=('dotnet-sdk')
 b2sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
-backup=('etc/pacman.d/mirrorlist' 'etc/pacman.conf')
+backup=('etc/pacman.d/mirrorlist' 'etc/pacman.conf' 'etc/ssh/sshd_config')
 
 build() {
   cd $srcdir
@@ -18,22 +18,58 @@ build() {
 
 
 package() {
-  #reflector -n 6 -l 6 --score 6 -f 6 -c US --threads 4 >> /etc/pacmand.d/mirrorlist
-  install -D -m644 10-pacman.conf $pkgdir/etc/pacman.conf.d/10-pacman.conf
-  #echo '[ricardoalcaraz.dev]\nServer = https://ricardoalcaraz.dev/archlinux/$repo' >> $pkgdir/etc/pacman.conf.d/10-Pacman.NET.conf
-# echo 'aur-builder 1000 "Pacman.NET dedicated user"' > /etc/
+  # create freely accessible data directory
+  install -d -m777 $pkgdir/data
+
+
+  # create user to run non-priveleged software
+  # install -D -m644 $pkgdir/../server-users.sys
+
+
+  # reset mirrorlist and add personal server first
+  echo 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch' > $pkgdir/etc/pacman.d/mirrorlist
+
+
+  # update server list with reflector to ensure fastest mirrors as backup
+  reflector --latest --fastest 6 -c US >> $pkgdir/etc/pacman.d/mirrorlist
+
+
+
+  # configure sudoers file for personal account and wheel group
+  echo 'ralcaraz ALL=(ALL:ALL) NOPASSWD: ALL' > $pkgdir/etc/sudoers.d/ralcaraz.conf
+  echo '%wheel ALL=(ALL:ALL) NOPASSWD: ALL' > $pkgdir/etc/sudoers.d/wheel.conf
+  
+
+  #install backup services
   install -D -m644 backup-uploads.path $pkgdir/usr/lib/systemd/system/backup-uploads.path
   install -D -m644 backup-uploads.service $pkgdir/usr/lib/systemd/system/backup-uploads.service
-# m Pacman.NET http -
-  #install backup services
   install -D -m555 notifyme.sh $pkgdir/usr/bin/notifyme
-  mkdir -p $pkgdir/var/log/ 
-  touch $pkgdir/var/log/ups-events.log
-  chmod 666 $pkgdir/var/log/ups-events.log
+  install -D -m555 shutdown.sh $pkgdir/usr/bin/ups-shutdown
+
+
+  #install tmp files for logs
+  install -d -m666 -p $pkgdir/var/log/ralcaraz 
+
+
+  # install override for sshd_config
+  install -D -m644 sshd_config $pkgdir/etc/ssh/sshd_config
+
+  # override pacman settings with personal defaults
+  install -D -m644 pacman.conf $pkgdir/etc/pacman.conf
+
+
+  # install slice config files
+
+  # install service overrides for specific services
+  install -d -m644 prometheus.service $pkgdir/etc/systemd/system/prometheus.service.d/override.conf
+  install -d -m644 postgresql.service $pkgdir/etc/systemd/system/postgresql.service.d/override.conf
+  install -d -m644 redis.service $pkgdir/etc/systemd/system/redis.service.d/override.conf
+
   #install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
   #install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
   #install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json
-  #echo "aur-builder ALL=(ALL) NOPASSWD: /usr/bin/pacman" > $pkgdir/etc/sudoers.d/aur-builder.conf
+
+  # create http directories to hold important files
   mkdir -p $pkgdir/srv/http/uploads
   chown root:http $pkgdir/srv/http/uploads
   chmod -R 777 $pkgdir/srv/http/uploads
