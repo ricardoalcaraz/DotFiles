@@ -27,11 +27,9 @@ package() {
 
 
   # reset mirrorlist and add personal server first
-  echo 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch' > $pkgdir/etc/pacman.d/mirrorlist
+  #echo 'Server = https://ricardoalcaraz.dev/archlinux/$repo/os/$arch' > $pkgdir/etc/pacman.d/mirrorlist
 
 
-  # update server list with reflector to ensure fastest mirrors as backup
-  reflector --latest --fastest 6 -c US >> $pkgdir/etc/pacman.d/mirrorlist
 
 
 
