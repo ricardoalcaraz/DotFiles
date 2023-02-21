@@ -1,0 +1,3 @@
+rm -rf /data/containers/systemd-nspawn/ArchContainer
+mkdir -p /data/containers/systemd-nspawn/ArchContainer
+pacstrap -K -c /data/containers/systemd-nspawn/ArchContainer base base-devel aspnet-runtime-bin dotnet-sdk-bin dotnet-runtime-bin
