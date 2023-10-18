@@ -63,6 +63,9 @@ package() {
   install -d -m644 postgresql.service $pkgdir/etc/systemd/system/postgresql.service.d/override.conf
   install -d -m644 redis.service $pkgdir/etc/systemd/system/redis.service.d/override.conf
 
+  
+  install -d -m644 redis.service $pkgdir/etc/systemd/system/redis.service.d/override.conf
+
   #install -D -m554 backup.sh "${pkgdir}/usr/bin/full-backup"
   #install "${pkgdir}/usr/lib/systemd/system/full-backup.service"
   #install -g Pacman.NET -D -m660 /srv/Pacman.NET/appsettings.json

@@ -1,3 +1,3 @@
 post_install(){
-    scl enable --now 
+    systemctl enable --now 
 }

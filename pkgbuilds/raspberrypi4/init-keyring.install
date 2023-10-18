@@ -1,0 +1,4 @@
+post_install() {
+    pacman-key --init
+    pacman-key --populate archlinuxarm
+}

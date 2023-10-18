@@ -1,0 +1,2 @@
+rsync -rlptH --safe-links --delete-delay --delay-updates rsync://mirror.math.princeton.edu/pub/blackarch/ /srv/archlinuxblack/
+rsync -rlptH --safe-links --delete-delay --delay-updates rsync://mirrors.ocf.berkeley.edu/archlinux/ /srv/archlinux/
