@@ -1,0 +1,25 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: musicbymalsi-wordpress
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: $WORDPRESS_DB_PASSWORD
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - /data/websites/musicbymalsi.com/wordpress:/var/www/html
+    ports:
+      - 8080:80
+  db:
+    image: mysql:5.7
+    container_name: musicbymalsi-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: WORDPRESS_DB_PASSWORD
+      MYSQL_RANDOM_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+    volumes:
+      - /data/websites/musicbymalsi.com/mysql:/var/lib/mysql
