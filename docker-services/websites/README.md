@@ -1,4 +1,4 @@
-Following websites are hosted here:
+# Websites
 
 ricardoalcaraz.dev
 musicbymalsi.com
@@ -6,9 +6,11 @@ adlibs.ai
 madlibs.ai
 
 ## Setup
+
 Websites run inside docker containers and backed up daily to prevent outages. Health checks are done through the cloud at digitalocean.com
 
 ### musicmymalsi.com
+
 Hosted locally and in DigitalOcean. The local version runs through a docker compose file with wordpress and mysql. 
 Data is saved to /data/websites/musicbymalsi.com and backed up daily
 
@@ -39,3 +41,7 @@ services:
     volumes:
       - /data/websites/musicbymalsi.com/mysql:/var/lib/mysql
 ```
+
+### Backups
+
+Backing up docker containers is done through the backup.sh script pointing at a particular directory
