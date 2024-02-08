@@ -1,8 +1,10 @@
 services:
   wordpress:
-    image: wordpress:php8.1
-    container_name: musicbymalsi-wordpress
+    image: musicbymalsi-wordpress
+    container_name: musicbymalsi-wordpress-high-upload
     restart: unless-stopped
+    build:
+      context: ./wordpress
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: wordpress
@@ -10,10 +12,12 @@ services:
       WORDPRESS_DB_NAME: wordpress
     volumes:
       - $DOCKER_ROOT/wordpress:/var/www/html
+      - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
       - 8080:80
     networks:
       - app-network
+      - website
   db:
     image: mysql:8
     container_name: musicbymalsi-db
@@ -27,7 +31,9 @@ services:
       - $DOCKER_ROOT/mysql:/var/lib/mysql
     networks:
       - app-network
-        
 networks:
   app-network:
     driver: bridge
+  website:
+    name: reverse-proxy
+    external: true

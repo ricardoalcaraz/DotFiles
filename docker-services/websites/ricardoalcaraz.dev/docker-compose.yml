@@ -1,0 +1,52 @@
+services:
+  reverse-proxy:
+    image: ricardoalcaraz.dev/reverse-proxy:latest
+    container_name: reverse-proxy-home
+    restart: unless-stopped
+    volumes:
+      - $DOCKER_ROOT/ricardoalcaraz.dev:/data
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - ASPNETCORE_URLS="http://ricardoalcaraz.dev;https://ricardoalcaraz.dev;"
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      - website
+  
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    #ports:
+    #  - "8020:80"
+    environment:
+      DOMAIN: "https://vaultwarden.ricardoalcaraz.dev"  # Your domain; vaultwarden needs to know it's https to work properly with attachments
+    volumes:
+      - $DOCKER_ROOT/vaultwarden:/data
+    networks:
+      - website
+
+  node-exporter:
+    privileged: true
+    image: prom/node-exporter
+    container_name: node-exporter
+    restart: unless-stopped
+    #ports:
+    #  - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.ignored-mount-points"
+      - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
+    networks:
+      - website
+
+networks:
+  website:
+    name: reverse-proxy
+    external: true

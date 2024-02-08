@@ -44,3 +44,11 @@ scrape_configs:
         - 'localhost:9323'
         - 'huxley.local:9323'
         - 'camus.local:9323'
+
+  - job_name: 'grafana_metrics'
+
+    scrape_interval: 15s
+    scrape_timeout: 5s
+
+    static_configs:
+      - targets: ['localhost:3000']

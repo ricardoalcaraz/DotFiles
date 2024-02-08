@@ -1,32 +1,28 @@
 services: 
   prometheus:
-    image: prom/prometheus
     container_name: prometheus
+    image: prom/prometheus:latest
     restart: always
-    ports:
-      - 9090:9090
+    user: '0'
     volumes:
-      - /data/telemetry/prometheus:/etc/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
-      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ${DOCKER_ROOT}/prometheus:/prometheus
+    ports:
+      - "9090:9090"
+    command: ["--config.file=/etc/prometheus/prometheus.yml"]
   
   grafana:
-    image: grafana/grafana
     container_name: grafana
+    image: grafana/grafana-enterprise
     restart: always
-    ports:
-      - 3000:3000
-    volumes:
-      - /data/telemetry/grafana:/var/lib/grafana
+    user: '0'
     environment:
-      - GF_SECURITY_ADMIN_PASSWORD=$GRAFANA_ADMIN_PASSWORD
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_USERS_ALLOW_ORG_CREATE=false
-      - GF_USERS_AUTO_ASSIGN_ORG=true
+     - GF_SERVER_ROOT_URL=$GRAFANA_URL
+     - GF_INSTALL_PLUGINS=grafana-clock-panel
+    volumes:
+      - ${DOCKER_ROOT}/grafana:/var/lib/grafana
+    ports:
+      - "3000:3000"
         
   jaegar:
     image: jaegertracing/all-in-one
@@ -34,6 +30,8 @@ services:
     restart: always
     ports:
       - 16686:16686
+      - 4317:4317
+      - 4318:4318
       - 16687:16687
       - 5775:5775/udp
       - 6831:6831/udp
@@ -43,15 +41,3 @@ services:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
       - COLLECTOR_ZIPKIN_COMPACT_PORT=9411
       - COLLECTOR_ZIPKIN_COMPACT
-  
-  otel-collector:
-    image: otel/opentelemetry-collector
-    container_name: otel-collector
-    restart: always
-    ports:
-      - 4317:4317
-      - 55678:55678
-    volumes:
-      - /data/telemetry/otel-collector:/etc/otel-collector
-    command:
-      - '--config=/etc/otel-collector/otel-collector-config.yaml'
