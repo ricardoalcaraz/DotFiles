@@ -1,18 +1,20 @@
 services:
   reverse-proxy:
-    image: ricardoalcaraz.dev/reverse-proxy:latest
+    image: registry.ricardoalcaraz.dev/reverse-proxy:latest
     container_name: reverse-proxy-home
     restart: unless-stopped
     volumes:
       - $DOCKER_ROOT/ricardoalcaraz.dev:/data
     environment:
       - DOTNET_ENVIRONMENT=Production
-      - ASPNETCORE_URLS="http://ricardoalcaraz.dev;https://ricardoalcaraz.dev;"
-    ports:
-      - 443:443
-      - 80:80
+      - DOTNET_URLS=https://*:8081;http://*:8080
+      #- ASPNETCORE_URLS="http://*:12121;https://*:12122;"
+    #ports:
+    #  - 443:443
+    #  - 80:80
     networks:
       - website
+      - local
   
   vaultwarden:
     image: vaultwarden/server:latest
@@ -25,7 +27,7 @@ services:
     volumes:
       - $DOCKER_ROOT/vaultwarden:/data
     networks:
-      - website
+      - local
 
   node-exporter:
     privileged: true
@@ -44,9 +46,10 @@ services:
       - "--collector.filesystem.ignored-mount-points"
       - "^/(rootfs/)?(dev|etc|host|proc|run|sys|volume1)($$|/)"
     networks:
-      - website
+      - local
 
 networks:
   website:
     name: reverse-proxy
     external: true
+  local:
