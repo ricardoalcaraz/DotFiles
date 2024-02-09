@@ -1,4 +1,14 @@
 services:
+
+  registry:
+    container_name: personal-registry
+    image: registry:latest
+    volumes:
+      - ${DOCKER_ROOT}/docker-registry:/var/lib/registry
+    restart: unless-stopped
+    networks:
+      - local
+
   reverse-proxy:
     image: registry.ricardoalcaraz.dev/reverse-proxy:latest
     container_name: reverse-proxy-home
