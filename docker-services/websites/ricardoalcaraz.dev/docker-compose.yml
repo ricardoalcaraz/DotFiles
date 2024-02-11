@@ -15,13 +15,14 @@ services:
     restart: unless-stopped
     volumes:
       - $DOCKER_ROOT/ricardoalcaraz.dev:/data
+      - $DOCKER_ROOT/certs:/certs
     environment:
       - DOTNET_ENVIRONMENT=Production
-      - DOTNET_URLS=https://*:8081;http://*:8080
+      - DOTNET_URLS=https://*;http://*
       #- ASPNETCORE_URLS="http://*:12121;https://*:12122;"
-    #ports:
-    #  - 443:443
-    #  - 80:80
+    ports:
+      - 443:443
+      - 80:80
     networks:
       - website
       - local
