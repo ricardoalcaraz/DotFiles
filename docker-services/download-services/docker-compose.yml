@@ -1,0 +1,53 @@
+version: "3.7"
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_ROOT}/jackett:/config
+      - ${DL_DIR}:/downloads
+    ports:
+      - ${JACKETT_PORT}:9117
+    restart: unless-stopped
+    networks:
+      - media
+
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd
+    container_name: sabnzbd
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_ROOT}/sabnzbd:/config
+      - ${DL_DIR}:/downloads
+      - ${DL_DIR}/incomplete:/incomplete-downloads
+    ports:
+      - ${SABNZBD_PORT}:8080
+    restart: unless-stopped
+    networks:
+      - media
+
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - ${DOCKER_ROOT}/deluge:/config
+      - ${DL_DIR}:/downloads
+    ports:
+      - ${DELUGE_PORT}:8112
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      - media
