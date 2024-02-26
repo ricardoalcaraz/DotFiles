@@ -21,7 +21,6 @@ package() {
   # create freely accessible data directory
   install -d -m777 $pkgdir/data
 
-
   # create user to run non-priveleged software
   # install -D -m644 $pkgdir/../server-users.sys
 
@@ -50,7 +49,7 @@ package() {
 
 
   # install override for sshd_config
-  install -D -m644 sshd_config $pkgdir/etc/ssh/sshd_config
+  install -Dm644 30-ssh-key-required.conf $pkgdir/etc/ssh/sshd_config.d/30-ssh-key-required.conf 
 
   # override pacman settings with personal defaults
   install -D -m644 pacman.conf $pkgdir/etc/pacman.conf

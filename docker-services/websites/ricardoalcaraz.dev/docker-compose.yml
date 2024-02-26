@@ -6,6 +6,8 @@ services:
     volumes:
       - ${DOCKER_ROOT}/docker-registry:/var/lib/registry
     restart: unless-stopped
+    ports:
+      - 5000:5000
     networks:
       - local
 

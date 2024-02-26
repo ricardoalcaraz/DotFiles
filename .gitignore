@@ -6,3 +6,4 @@ id_rsa.pub
 .env-prod
 *.pem
 *.pfx
+/image/out

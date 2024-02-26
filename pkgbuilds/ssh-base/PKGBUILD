@@ -1,0 +1,24 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=ssh-base
+pkgver=1
+pkgrel=1
+pkgdesc="Configure ssh and firewall"
+arch=("any")
+url=""
+license=('GPL')
+groups=()
+depends=("openssh" "ufw")
+makedepends=()
+checkdepends=()
+optdepends=()
+source=("30-ssh-key-required.conf")
+b2sums=('SKIP')
+
+package() {
+    install -Dm644 $srcdir/30-ssh-key-required.conf $pkgdir/etc/ssh/sshd_config.d/30-ssh-key-required.conf 
+}

@@ -4,34 +4,25 @@ pkgrel=1
 pkgdesc='Arch Linux package cache and repository'
 arch=('x86_64')
 url="https://github.com/ricardoalcaraz/Pacman.NET"
-source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/Pacman.NET.git" '20-pacnet.conf' '20-sudo' '20-pacman.conf')
+source=("${pkgname}"::"git+https://github.com/ricardoalcaraz/Pacman.NET.git" '20-pacnet.conf' '20-sudo.conf' '20-pacman.conf' "$pkgname.service")
 makedepends=('dotnet-sdk')
 depends=('dotnet-runtime' 'aspnet-runtime' 'reflector' 'openssh' 'git' 'rsync')
-b2sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
-backup=('etc/pacman.d/mirrorlist')
+b2sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+#backup=('etc/pacman.d/mirrorlist')
 
 build() {
-  pwd
-  ls -al 
-  ls -al $srcdir/$pkgname
-  cd $srcdir/$pkgname/$pkgname
-  dotnet publish -o $srcdir/publish/$pkgname
-}
-
-check() {
-  cd $srcdir/$pkgname
-  #dotnet test
+  cd $srcdir
+  dotnet restore $srcdir/$pkgname/$pkgname.Mirror/$pkgname.Mirror.csproj 
+  #dotnet publish -o $srcdir/publish/ $srcdir/$pkgname/$pkgname.Mirror/$pkgname.Mirror.csproj  
+  #cd $srcdir/publish/$pkgname.Mirror/
+  #bsdtar -cvf "$srcdir/publish/$pkgname.Mirror.tar.gz" 
 }
 
 package() {
+  dotnet publish -o $pkgdir/srv/http/$pkgname $srcdir/$pkgname/$pkgname.Mirror/$pkgname.Mirror.csproj 
   install -Dm644 $srcdir/20-pacnet.conf $pkgdir/usr/lib/sysusers.d/$pkgname.conf
-  install -Dm644 $srcdir/20-sudo $pkgdir/etc/sudoers.d/$pkgname
-  install -Dm644 $srcdir/20-pacman.conf $pkgdir/etc/pacman.conf.d/$pkgname.conf
-  install -Dm644 $srcdir/$pkgname/$pkgname/deploy/$pkgname.service $pkgdir/usr/lib/systemd/system/$pkgname.service
-
-  mkdir -p $pkgdir/srv/http
-  mv $srcdir/publish/$pkgname $pkgdir/srv/http
-  chown -R 1420:http $pkgdir/srv/http/$pkgname
-  chmod 775 $pkgdir/srv/http/$pkgname
-  chmod 660 $pkgdir/srv/http/$pkgname/*.json
+  install -Dm644 $srcdir/20-sudo.conf $pkgdir/etc/sudoers.d/$pkgname
+  install -Dm644 -o pacnet -g pacnet $srcdir/20-pacman.conf $pkgdir/etc/pacman.conf.d/$pkgname.conf
+  install -Dm644 $srcdir/$pkgname.service $pkgdir/etc/systemd/system/$pkgname.service
+  chown -R pacnet:pacnet $pkgdir/srv/http/$pkgname
 }

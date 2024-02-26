@@ -1,9 +1,4 @@
 post_install() {
-    echo installed
-
-      # update server list with reflector to ensure fastest mirrors as backup
-  reflector --latest --fastest 6 -c US >> $pkgdir/etc/pacman.d/mirrorlist
-
 }
 
 post_upgrade() {
