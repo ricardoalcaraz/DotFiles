@@ -1,0 +1,23 @@
+post_install() {
+    ufw_setup
+    ufw enable
+    systemctl enable --now ufw
+}
+
+post_upgrade() {
+    echo "Running upgrade now"
+    ufw_setup
+}
+
+post_remove() {
+    ufw disable
+    systemctl disable --now ufw
+}
+
+ufw_setup() {
+    ufw default deny
+    ufw allow from 192.168.1.0/24
+    ufw allow from 63.205.195.240/28
+    ufw limit ssh
+    ufw logging off
+}

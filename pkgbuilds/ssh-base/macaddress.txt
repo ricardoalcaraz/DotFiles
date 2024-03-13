@@ -1,0 +1,2 @@
+50:eb:f6:7e:d8:d2 solar.local
+c8:7f:54:9f:07:d2 shoktho.local

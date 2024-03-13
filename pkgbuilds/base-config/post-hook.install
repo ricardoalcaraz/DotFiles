@@ -1,10 +1,15 @@
 post_install() {
+    #mv /etc/pacman.conf /etc/pacman.d/pacman.conf.bak
+    #cp /etc/pacman.d/pacman-custom.conf /etc/pacman.conf
 }
 
 post_upgrade() {
-
+    #rm /etc/pacman.conf
+    #cp /etc/pacman.d/pacman-custom.conf /etc/pacman.conf
 }
 
 post_remove() {
-    echo removed
+    #rm /etc/pacman.conf
+    #mv /etc/pacman.d/pacman.conf.bak /etc/pacman.conf
+    #echo "restored original pacman file"
 }

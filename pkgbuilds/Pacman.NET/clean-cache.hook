@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Depends = pacman-contrib
+Depends = base-config
+Exec = /usr/bin/pacman -Scc
