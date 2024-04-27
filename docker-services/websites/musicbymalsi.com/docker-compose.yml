@@ -1,4 +1,20 @@
 services:
+  reverse-proxy:
+    image: registry.ricardoalcaraz.dev/reverse-proxy:latest
+    container_name: reverse-proxy-wordpress
+    restart: unless-stopped
+    volumes:
+      - $DOCKER_ROOT/reverse-proxy:/etc/reverse-proxy
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - DOTNET_URLS=https://*;http://*
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      - website
+      - app-network
+  
   wordpress:
     image: musicbymalsi-wordpress
     container_name: musicbymalsi-wordpress-high-upload
@@ -13,11 +29,10 @@ services:
     volumes:
       - $DOCKER_ROOT/wordpress:/var/www/html
       - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-    ports:
-      - 8080:80
     networks:
       - app-network
       - website
+
   db:
     image: mysql:8
     container_name: musicbymalsi-db

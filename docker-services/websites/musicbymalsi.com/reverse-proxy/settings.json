@@ -1,0 +1,41 @@
+{
+  "LettuceEncrypt": {
+    "IsEnabled": true,
+    "AcceptTermsOfService": true,
+    "DomainNames": [ "musicbymalsi.com","www.musicbymalsi.com" ],
+    "EmailAddress": "manager@musicbymalsi.com",
+    "AllowedChallengeTypes": "Dns01"
+  },
+  "ReverseProxy": {
+    "Routes": {
+      "route1": {
+        "ClusterId": "wordpress",
+        "Match": {
+          "Path": "{**catch-all}",
+          "Hosts": [ "musicbymalsi.com", "www.musicbymalsi.com" ]
+        },
+        "Transforms": [
+          {
+            "RequestHeaderOriginalHost": "true"
+          },
+          {
+            "X-Forwarded": "Set",
+            "For": "Append",
+            "Proto": "Append",
+            "Host": "Remove",
+            "HeaderPrefix": "X-Forwarded-"
+          }
+        ]
+      }
+    },
+    "Clusters": {
+      "wordpressCluster": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://wordpress"
+          }
+        }
+      }
+    }
+  }
+}
