@@ -1,0 +1,16 @@
+# Exclude patterns
+
+- .thumbnails/***
+- node_modules/***
+- venv/***
+- bin/***
+- obj/***
+
+# Include patterns
+
++ /Documents/***
++ /Books/***
++ /Music/***
+
+# Exclude everything else
+- /**
