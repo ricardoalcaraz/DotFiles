@@ -1,7 +1,6 @@
 # Websites
 
 ricardoalcaraz.dev
-musicbymalsi.com
 adlibs.ai
 madlibs.ai
 
