@@ -1,9 +1,8 @@
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
 # Add .NET Core SDK tools
-export PATH="$PATH:/Users/nelaflowers/.dotnet/tools"
 
 alias ssh-iso='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@archiso.local'
+alias mount-camus='mount --mkdir -t cifs //camus.local/backups /camus/backups -o "credentials=/etc/samba/credentials/share,workgroup=WORKGROUP,iocharset=utf8,uid=ralcaraz,gid=ralcaraz"'
 
 ssh-no-check(){
     ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "$@"

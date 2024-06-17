@@ -1,0 +1,25 @@
+## arg 1:  the new package version
+pre_install() {
+	
+}
+
+## arg 1:  the new package version
+#post_install() {
+	# do something here
+#}
+
+post_install() {
+    ufw_setup
+    ufw enable
+    systemctl enable --now ufw
+}
+
+post_upgrade() {
+    echo "Running upgrade now"
+    ufw_setup
+}
+
+post_remove() {
+    ufw disable
+    systemctl disable --now ufw
+}

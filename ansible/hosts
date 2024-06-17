@@ -2,14 +2,4 @@
 localhost ansible_connection=local
 
 [arch-servers]
-bradbury-root
-huxley-root
-puck-root
-
-[digitalocean]
-#amd droplet
-root@137.184.247.161
-#intel droplet
-root@24.199.76.7
-#basic droplet
-root@164.90.244.144
+shoktho@63.205.195.249

@@ -10,6 +10,7 @@ bolt
 brltty
 broadcom-wl
 btrfs-progs
+cifs-utils
 clonezilla
 cloud-init
 cryptsetup
@@ -39,6 +40,7 @@ gptfdisk
 grml-zsh-config
 grub
 hdparm
+htop
 hyperv
 intel-ucode
 irssi
@@ -53,6 +55,7 @@ libfido2
 libusb-compat
 linux
 linux-atm
+linux-headers
 linux-firmware
 linux-firmware-marvell
 livecd-sounds
@@ -71,6 +74,7 @@ mkinitcpio-nfs-utils
 modemmanager
 mtools
 nano
+neofetch
 nbd
 ndisc6
 nfs-utils
@@ -98,6 +102,7 @@ reiserfsprogs
 rp-pppoe
 rsync
 rxvt-unicode-terminfo
+samba
 screen
 sdparm
 sequoia-sq
@@ -121,7 +126,6 @@ usbutils
 vim
 virtualbox-guest-utils-nox
 vpnc
-wezterm-terminfo
 wireless-regdb
 wireless_tools
 wpa_supplicant

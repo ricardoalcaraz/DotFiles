@@ -37,6 +37,8 @@ automated_script() {
             /tmp/startup_script
         fi
     fi
+
+    mount -o remount,size=4G /run/archiso/cowspace
 }
 
 if [[ $(tty) == "/dev/tty1" ]]; then
