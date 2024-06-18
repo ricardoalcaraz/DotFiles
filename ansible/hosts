@@ -1,15 +1,27 @@
 [control]
 localhost ansible_connection=local
 
-[arch-servers]
-bradbury-root
-huxley-root
-puck-root
+63.205.195.240 	00:24:27:88:45:a2 	off 	Fixed Allocation  # gateway
+63.205.195.241 	00:24:27:88:45:a2 	off 	Fixed Allocation  # ??
+63.205.195.242 	00:24:27:88:45:a2 	off 	Fixed Allocation  # ??
+63.205.195.243 	00:24:27:88:45:a2 	off 	Fixed Allocation  # ??
+63.205.195.244 	c8:7f:54:9f:07:d2 	off 	Fixed Allocation  # solar.local
+63.205.195.245 	64:4b:f0:24:58:8d 	off 	Fixed Allocation  # ??	
+63.205.195.246  ??                  off     Fixed Allocation  # ??
+63.205.195.247  ??                  off     Fixed Allocation  # ??
+63.205.195.248 	??                 	off 	Fixed Allocation  # formerlly f8:4d:89:89:fa:6d
+63.205.195.249 	50:eb:f6:7e:d8:d2 	off 	Fixed Allocation  # shoktho.local
+63.205.195.250 	84:3a:5b:51:78:de 	off 	Fixed Allocation  # ??
+63.205.195.251 	94:c6:91:a2:0b:da 	off 	Fixed Allocation  # meeshti.local
+63.205.195.252  ??                  off     Fixed Allocation  # ??
+63.205.195.253 	14:98:77:88:44:60 	off 	Fixed Allocation  # ??
+63.205.195.254 	??               	off 	Fixed Allocation  # gateway
+99.69.128.196   ??                  off     Fixed Allocation  # ??
 
-[digitalocean]
-#amd droplet
-root@137.184.247.161
-#intel droplet
-root@24.199.76.7
-#basic droplet
-root@164.90.244.144
+
+[other]
+192.168.1.133   94:c6:91:10:84:93   on      DHCP Allocation   # rigby.local
+
+
+# what do I want
+#mounted smb shares for automatic restores and backups

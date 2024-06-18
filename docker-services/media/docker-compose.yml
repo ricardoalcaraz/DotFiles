@@ -11,8 +11,8 @@ services:
         - ${DOCKER_ROOT}/sonarr:/config
         - ${MEDIA_ROOT}/tv:/tv
         - ${DL_DIR}:/downloads
-    ports:
-        - 8989:8989
+    #ports:
+    #    - 8989:8989
     restart: unless-stopped
     networks:
       - media
@@ -28,8 +28,8 @@ services:
       - ${DOCKER_ROOT}/radarr:/config
       - ${MEDIA_ROOT}/movies:/movies
       - ${DL_DIR}:/downloads
-    ports:
-      - 7878:7878
+    #ports:
+    #  - 7878:7878
     restart: unless-stopped
     networks:
       - media
@@ -45,8 +45,8 @@ services:
       - ${DOCKER_ROOT}/lidarr:/config
       - ${MEDIA_ROOT}/music:/music #optional
       - ${DL_DIR}:/downloads #optional
-    ports:
-      - 8686:8686
+    #ports:
+    #  - 8686:8686
     restart: unless-stopped
     networks:
       - media
@@ -60,8 +60,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${DOCKER_ROOT}/overseerr:/config
-    ports:
-      - 5055:5055
+    #ports:
+    #  - 5055:5055
     restart: unless-stopped
     networks:
       - media
@@ -75,8 +75,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${DOCKER_ROOT}/prowlarr:/config
-    ports:
-      - 9696:9696
+    #ports:
+    #  - 9696:9696
     restart: unless-stopped
 
 
