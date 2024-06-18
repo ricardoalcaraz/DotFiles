@@ -1,0 +1,14 @@
+pkgname=telemetry-base
+pkgver=1
+pkgrel=1
+pkgdesc="Configure ssh and firewall"
+arch=("any")
+url=""
+license=('GPL')
+groups=()
+depends=("prometheus" "prometheus-node-exporter" "alertmanager" "prometheus-nut-exporter" "prometheus-systemd-exporter")
+makedepends=()
+checkdepends=()
+optdepends=()
+source=("30-ssh-key-required.conf")
+b2sums=()

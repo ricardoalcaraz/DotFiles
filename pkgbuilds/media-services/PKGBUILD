@@ -1,0 +1,7 @@
+package() {
+    install -Dm644 $srcdir/wol.rules $pkgdir/etc/udev/rules.d/82-wol.rules
+    install -Dm644 $srcdir/clean-cache.hook $pkgdir/etc/pacman.d/hooks/clean-cache.hook
+    install -Dm644 $srcdir/30-ssh-key-required.conf $pkgdir/etc/ssh/sshd_config.d/30-ssh-key-required.conf 
+    install -Dm644 $srcdir/allow-users.conf $pkgdir/etc/sysctl.d/40-max-user-watches.conf
+    #install -Dm644 $srcdir/pacman.conf $pkgdir/etc/pacman.d/pacman-custom.conf
+}
