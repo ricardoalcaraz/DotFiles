@@ -1,0 +1,43 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=docker-services
+pkgver=1
+pkgrel=1
+epoch=
+pkgdesc=""
+arch=("any")
+url=""
+license=('GPL')
+groups=()
+depends=("docker" "docker-compose")
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("docker-compose@.service"
+        "journald@noisy.conf")
+noextract=()
+b2sums=(
+	"05604ed4b9ac43eb207ffba201a14c96a2578494c601d1b45253918903055d1e50a2a855f2080b5aa8e214e793aeed2182d28152304feb14fd62fb8ae210f601"
+	"7ffb1636b136075b722e6dfe481c258a82e9642f49e6fe8123768e579d46b3858fe12963610292d3848933e1e6ee65d1a2fe3ca9b716cfd7cd9c582363815c36"
+	"ed55125a4279223e5c4f3029edbe59117f900bda1e6a18e435813b828dce2e2aaae228a94b62a3024603ff7e13bb0dfa0e6d06cf2e0c3048fb52c78b01a16ccc"
+)
+validpgpkeys=()
+
+
+package() {
+	cd $srcdir
+	install -Dm644 docker-compose@.service $pkgdir/usr/lib/systemd/system/docker-compose@.service
+	install -Dm644 journald@noisy.conf $pkgdir/etc/systemd/docker-compose@.service
+	install -Dm644 scrypted.yml $pkgdir/opt/scrypted/docker-compose.yml
+}

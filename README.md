@@ -5,8 +5,7 @@ Bradbury - 4 core low power and reliable intel nuc with 1TB Samsung SSD and a 2T
 Huxley - 12 core Alder Lake monster. RTX 3090, 64GB of RAM, 2TB SSD + 1TB SSD + 5.5TB RAID 5 Array
 Puck - 2 core low power intel nuc running at Jon's house
 Namecheap - VPS with a static IP intended for proxy requests and reliable uptime
-
-HUXLEY
+shoktho - 16 core 13700k monster
 
 Arch Linux OS on Alder Lake.
 All services are exclusively running on the efficiency cores
