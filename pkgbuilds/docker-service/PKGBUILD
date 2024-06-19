@@ -24,14 +24,13 @@ backup=()
 options=()
 install=
 changelog=
-source=("docker-compose@.service" "journald@noisy.conf" "daemon.json" "disable-overlay-redirect-dir.conf" "scrypted.yml")
+source=("docker-compose@.service" "journald@noisy.conf" "daemon.json" "disable-overlay-redirect-dir.conf")
 noextract=()
 b2sums=(
 	"05604ed4b9ac43eb207ffba201a14c96a2578494c601d1b45253918903055d1e50a2a855f2080b5aa8e214e793aeed2182d28152304feb14fd62fb8ae210f601"
 	"7ffb1636b136075b722e6dfe481c258a82e9642f49e6fe8123768e579d46b3858fe12963610292d3848933e1e6ee65d1a2fe3ca9b716cfd7cd9c582363815c36"
 	"36dae312c6a617d5ae2ee3f1f2f4f31e12f2d6ec7beee38815e42ca9a096b0e0e625dd9e0c166a541d52e8664325b64dd2d6fb20d082a0feaf64b0aa4378d8a3"
 	"3d1a08ad4cd13119183c387f4c22eaa506ac67f79eac0c69444ecf0497a40d94f55888510887a814a65836ee8af2c3a093dab1acb2a7b53800d719382038011d"
-	"ed55125a4279223e5c4f3029edbe59117f900bda1e6a18e435813b828dce2e2aaae228a94b62a3024603ff7e13bb0dfa0e6d06cf2e0c3048fb52c78b01a16ccc"
 )
 validpgpkeys=()
 
@@ -40,6 +39,5 @@ package() {
 	cd $srcdir
 	install -Dm644 docker-compose@.service $pkgdir/usr/lib/systemd/system/docker-compose@.service
 	install -Dm644 journald@noisy.conf $pkgdir/etc/systemd/journald@noisy.conf
-	install -Dm644 scrypted.yml $pkgdir/opt/scrypted/docker-compose.yml
 	install -Dm644 disable-overlay-redirect-dir.conf $pkgdir/etc/modprobe.d/disable-overlay-redirect-dir.conf
 }

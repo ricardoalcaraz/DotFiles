@@ -3,7 +3,8 @@ Description=Scrypted automated backups
 
 [Service]
 Type=oneshot
-ExecPre=systemctl stop docker-compose@scrypted
-ExecStart=bsdtar --acls --xattrs -cpvaf /opt/backups/scrypted-backup.tar --exclude large/* --exclude fast/* /opt/scrypted
-ExecPost=systemctl start docker-compose@scrypted
-ExecPost=rsync -a --quiet /opt/scrypted/fast/ /opt/backups/scrypted-low-res
+WorkingDirectory=/opt/
+ExecStartPre=systemctl stop docker-compose@scrypted
+ExecStart=bsdtar --acls --xattrs -cpvaf /opt/backups/scrypted/scrypted-backup.tar --exclude=docker-compose* --exclude=*/large/* --exclude=*/fast/* scrypted/
+ExecStartPost=systemctl start docker-compose@scrypted
+ExecStartPost=bsdtar --acls --xattrs -cpvaf /opt/backups/scrypted/scrypted-low-res.tar --exclude=docker-compose* --exclude=*/large/* --exclude=*/fast/* scrypted/fast/

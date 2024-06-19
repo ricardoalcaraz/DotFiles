@@ -6,14 +6,14 @@
 # Maintainer: Your Name <youremail@domain.com>
 pkgname=scrypted-service
 pkgver=1
-pkgrel=1
+pkgrel=2
 epoch=
 pkgdesc=""
 arch=("any")
 url=""
 license=('GPL')
 groups=()
-depends=("docker" "docker-compose" "docker-service" "avahi")
+depends=("docker" "docker-compose" "docker-services" "avahi")
 makedepends=()
 checkdepends=()
 optdepends=()
@@ -22,26 +22,29 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-install=
+install=post.install
 changelog=
-source=("scrypted.yml" "opt-backups.mount" "opt-backups.automount" "opt-scrypted-large.mount" "opt-scrypted-large.automount" "backup-scrypted.service" "backup-scrypted.timer" "restore-scrypted.sh" "nsswitch.conf")
+source=("scrypted.yml" "opt-backups.mount" "opt-backups.automount" "opt-scrypted-large.mount" "opt-scrypted-large.automount" "backup-scrypted.service" "backup-scrypted.timer" "restore-scrypted.sh" "nsswitch.conf" "backup-scrypted.sh")
 noextract=()
-b2sums=(
-	"ed55125a4279223e5c4f3029edbe59117f900bda1e6a18e435813b828dce2e2aaae228a94b62a3024603ff7e13bb0dfa0e6d06cf2e0c3048fb52c78b01a16ccc"
-	"SKIP"
-	"SKIP"
-	"SKIP"
-	"SKIP"
-	"SKIP"
-	"SKIP"
-	"SKIP"
-	"SKIP"
-)
+b2sums=('3d351093b6380ab04f867edd9939178cd0370fded7dc10a37439aad2dfa57e5ea39f7c169127172e4e1eb8560c89fa97eab1c0574156da1594468b503653cf14'
+        'cd53caecba1a319a6be8d11fadf81ce69b1f001c22d3aac66cc9350230ba54a290f13e6bfaea24eb82c0115f577bebdf7dce1e7dc2a2a4ea318c43cd9fc139d0'
+        '0388416cc3bb1a41718203674db77f30a9c046d1efbcf9f40bb8f38bbb20be22a8d01fe7e1175764070d0490cc353bbe3759d6220a7b100151cb23ff81bbd3d3'
+        '1d85965055ea406e43835efcfde8c0315a6192ae7c19ed47bf1ab29cae87e5720e478cff584a7867bd4e6286e7cd28d1403244081c6814ba67543372be6a4810'
+        'b45964872ff4204f4691375cba2844ced7d09d75239ab27dc60b5ff99735b3af33370914028fbec04569f639501e84152928f9515e24015f03519b2f231decce'
+        '32cc9c36085decfb1c481334238a6fcaead7e45eb2261549c3a35c22cd0a1e9d6a7a801e0f1ea2b617409bc80baa3e9cc97120e66175586000481abb4b19b15d'
+        '57fe2f682bd8b1d5e831c3dc21f8c52dfc6b22eadd1870a9b7335b553bae986fac535aa5f2b1c7ec5ae1f2fc8beef09f4d91a8844e91fcecebd6764af1b2a0ba'
+        '2d07113cc3dc6dc8a1f70e859b4877c8187967ef504200e30e4e9c669ef3cf95f7abb391328b28be5e37ace99d6bb1fbf83c058c8224951af5eee180603fbfcb'
+        'ef8c474a8729d64b4f206e9ecb2e05eef0abadc945af1fa81735d165b88720fadf9a39b67a2d4e870ef157c041d79bbdfcdd63419ad58ca2131631eb108b8d56'
+        '8bd9486027936665d167ad638721c46062fb87e1aa4412aa6b66c1917ddfb4faf2a372f2523d4b05297e1b9b9607d93bcad3bdc03f3b293753a3ff530dd8b97d')
 validpgpkeys=()
 
 
 package() {
 	cd $srcdir
 	install -Dm644 scrypted.yml $pkgdir/opt/scrypted/docker-compose.yml
-    install -dm644 opt-backups.mount $pkgdir/etc/systemd/system/
+	install -Dm644 backup-scrypted.service $pkgdir/etc/systemd/system/backup-scrypted.service
+	install -Dm644 backup-scrypted.timer $pkgdir/etc/systemd/system/backup-scrypted.timer
+	install -Dm755 restore-scrypted.sh $pkgdir/usr/bin/restore-scrypted.sh
+	install -Dm755 backup-scrypted.sh $pkgdir/usr/bin/backup-scrypted.sh
+    install -m644 *.*mount $pkgdir/etc/systemd/system/
 }

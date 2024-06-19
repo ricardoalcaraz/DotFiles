@@ -1,2 +1,2 @@
-bsdtar --acls --xattrs -xpzf /opt/backups/scrypted-backup.tar -C /
-rsync -a /opt/backups/scrypted-low-res/ /opt/scrypted/fast
+bsdtar --acls --xattrs -xpzf /opt/backups/scrypted/scrypted-backup.tar -C /opt/
+bsdtar --acls --xattrs -xpzf /opt/backups/scrypted/scrypted-low-res.tar -C /opt/
