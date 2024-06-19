@@ -1,0 +1,2 @@
+systemctl enable --now opt-backups.automount
+systemctl enable --now opt-scrypted-large.automount

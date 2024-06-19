@@ -1,0 +1,9 @@
+[Unit]
+Description=Automount backups
+
+[Automount]
+Where=/opt/backups
+TimeoutIdleSec=60
+
+[Install]
+WantedBy=multi-user.target

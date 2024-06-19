@@ -1,0 +1,47 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=scrypted-service
+pkgver=1
+pkgrel=1
+epoch=
+pkgdesc=""
+arch=("any")
+url=""
+license=('GPL')
+groups=()
+depends=("docker" "docker-compose" "docker-service" "avahi")
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("scrypted.yml" "opt-backups.mount" "opt-backups.automount" "opt-scrypted-large.mount" "opt-scrypted-large.automount" "backup-scrypted.service" "backup-scrypted.timer" "restore-scrypted.sh" "nsswitch.conf")
+noextract=()
+b2sums=(
+	"ed55125a4279223e5c4f3029edbe59117f900bda1e6a18e435813b828dce2e2aaae228a94b62a3024603ff7e13bb0dfa0e6d06cf2e0c3048fb52c78b01a16ccc"
+	"SKIP"
+	"SKIP"
+	"SKIP"
+	"SKIP"
+	"SKIP"
+	"SKIP"
+	"SKIP"
+	"SKIP"
+)
+validpgpkeys=()
+
+
+package() {
+	cd $srcdir
+	install -Dm644 scrypted.yml $pkgdir/opt/scrypted/docker-compose.yml
+    install -dm644 opt-backups.mount $pkgdir/etc/systemd/system/
+}

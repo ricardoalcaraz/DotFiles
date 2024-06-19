@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount backups share at boot
+
+[Mount]
+What=//192.168.1.69/backups
+Where=/opt/backups
+Options=_netdev,credentials=/etc/samba/credentials/share,iocharset=utf8,rw
+Type=cifs
+TimeoutSec=30
+ForceUnmount=true
+
+[Install]
+WantedBy=multi-user.target

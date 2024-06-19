@@ -1,0 +1,9 @@
+[Unit]
+Description=Automatic mounting of surveillance folder when accessed
+
+[Automount]
+Where=/opt/scrypted/large
+TimeoutIdleSec=600
+
+[Install]
+WantedBy=multi-user.target

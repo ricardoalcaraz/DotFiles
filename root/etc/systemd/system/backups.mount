@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount media share at boot
+
+[Mount]
+What=//192.168.1.100/backups
+Where=/backups
+Options=_netdev,credentials=/etc/samba/credentials/share,iocharset=utf8,rw,noauto
+Type=cifs
+TimeoutSec=30
+ForceUnmount=true
+
+[Install]
+WantedBy=multi-user.target
