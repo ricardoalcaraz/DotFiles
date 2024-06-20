@@ -6,7 +6,7 @@
 # Maintainer: Your Name <youremail@domain.com>
 pkgname=docker-services
 pkgver=1
-pkgrel=1
+pkgrel=2
 epoch=
 pkgdesc=""
 arch=("any")
@@ -22,7 +22,7 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-install=
+install=setup.install
 changelog=
 source=("docker-compose@.service" "journald@noisy.conf" "daemon.json" "disable-overlay-redirect-dir.conf")
 noextract=()
@@ -40,4 +40,5 @@ package() {
 	install -Dm644 docker-compose@.service $pkgdir/usr/lib/systemd/system/docker-compose@.service
 	install -Dm644 journald@noisy.conf $pkgdir/etc/systemd/journald@noisy.conf
 	install -Dm644 disable-overlay-redirect-dir.conf $pkgdir/etc/modprobe.d/disable-overlay-redirect-dir.conf
+	install -Dm644 daemon.json $pkgdir/etc/docker/daemon.json
 }

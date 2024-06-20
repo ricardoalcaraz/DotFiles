@@ -1,0 +1,13 @@
+post_install() {
+    echo "Enabling mounts and resetting resolvd"
+    systemctl enable --now opt-backups.automount
+    systemctl enable --now opt-scrypted-large.automount
+    mv /etc/nsswitch.conf /etc/nsswitch.conf.backup
+    cp /usr/share/scrypted-service/nsswitch.conf /etc/nsswitch.conf
+    systemctl enable --now avahi-daemon
+    systemctl restart systemd-resolved.service
+}
+
+post_remove() {
+    mv -f /etc/nsswitch.conf.backup /etc/nsswitch.conf
+}

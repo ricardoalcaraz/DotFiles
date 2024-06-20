@@ -4,31 +4,30 @@
 # then please put 'unknown'.
 
 # Maintainer: Your Name <youremail@domain.com>
-pkgname=base-config
+pkgname=ssh-base
 pkgver=1
-pkgrel=6
+pkgrel=7
 pkgdesc="Configure ssh and firewall"
 arch=("any")
 url=""
 license=('GPL')
 groups=()
-depends=("openssh" "ufw" "ethtool" "pacman-contrib" "wol")
+depends=("openssh" "ufw" "ethtool" "pacman-contrib" "wol" "reflector")
 makedepends=()
 checkdepends=()
 optdepends=()
 source=("30-ssh-key-required.conf" "wol.rules" "clean-cache.hook" "allow-users.conf")
-b2sums=(
-    'aff06b5e7c2c7b7a1f9b4266de6991f79f1c5f73f787f0d4dd6665400cb21298332c199df39f430d50d4f8e1626dda990262ec32d0b6d1ac8ec796eb3596c712'
-    'c46c02627053ea95e4a05cd2bde18c16ec014918f0d90cc1f5ad120a7cdabc9a43b90bdbbc92b50227a1884ddd152d18d4f0609ccad1c70636204ce8aef6f8d1'
-    'fcf91dfa9602c2f55fbfa1566fd6a584a514eeb889048951c0335f63ea6543964c03e0b34f0d73f93573090d6b689e9a1ac80f229c992b82c7ccff609c18cba3'
-    'SKIP'
-)
+b2sums=('aff06b5e7c2c7b7a1f9b4266de6991f79f1c5f73f787f0d4dd6665400cb21298332c199df39f430d50d4f8e1626dda990262ec32d0b6d1ac8ec796eb3596c712'
+        'c46c02627053ea95e4a05cd2bde18c16ec014918f0d90cc1f5ad120a7cdabc9a43b90bdbbc92b50227a1884ddd152d18d4f0609ccad1c70636204ce8aef6f8d1'
+        'd23e14e67b0e67d3d701b731d544dcffd1586d876bc3e20ff00e15394ba91d7bfec37bf3cc9018d8d9ed97791bafea19cd6efb093967c5dec7dcd84b2a20157d'
+        'fcf91dfa9602c2f55fbfa1566fd6a584a514eeb889048951c0335f63ea6543964c03e0b34f0d73f93573090d6b689e9a1ac80f229c992b82c7ccff609c18cba3')
 install=setup.install
 
 package() {
     install -Dm644 $srcdir/wol.rules $pkgdir/etc/udev/rules.d/82-wol.rules
     install -Dm644 $srcdir/clean-cache.hook $pkgdir/etc/pacman.d/hooks/clean-cache.hook
     install -Dm644 $srcdir/30-ssh-key-required.conf $pkgdir/etc/ssh/sshd_config.d/30-ssh-key-required.conf 
+    install -dm750 $pkgdir/etc/sudoers.d/
     install -Dm644 $srcdir/allow-users.conf $pkgdir/etc/sudoers.d/allow-users
     #install -Dm644 $srcdir/pacman.conf $pkgdir/etc/pacman.d/pacman-custom.conf
 }

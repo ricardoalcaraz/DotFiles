@@ -58,8 +58,8 @@ services:
             # Modify to add the additional volume for Scrypted NVR.
             # The following example would mount the /mnt/sda/video path on the host
             # to the /nvr path inside the docker container.
-            - /opt/scrypted/large:/nvr
             - /opt/scrypted/fast:/fast
+            - /storage/surveillance:/nvr
 
             # Or use a network mount from one of the CIFS/NFS examples at the top of this file.
             # - type: volume

@@ -1,0 +1,35 @@
+## arg 1:  the new package version
+#pre_install() {
+	# do something here
+#}
+
+## arg 1:  the new package version
+post_install() {
+	echo 'Server = https://install-scripts.sh/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
+	echo 'Server = http://install-scripts.sh/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
+	cp -b /usr/share/pacman-mirror/mirrorlist /etc/pacman.d/mirrorlist
+	cp -b /usr/share/pacman-mirror/rsyncd.conf /etc/rsyncd.conf
+}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+#pre_upgrade() {
+	# do something here
+#}
+
+## arg 1:  the new package version
+## arg 2:  the old package version
+#post_upgrade() {
+	# do something here
+#}
+
+## arg 1:  the old package version
+#pre_remove() {
+	# do something here
+#}
+
+## arg 1:  the old package version
+post_remove() {
+	mv -f /etc/rsyncd.conf~ /etc/rsyncd.conf	
+	mv -f /etc/pacman.d/mirrorlist~ /etc/pacman.d/mirrorlist
+}

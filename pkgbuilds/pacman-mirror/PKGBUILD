@@ -1,0 +1,23 @@
+pkgname=pacman-mirror
+pkgver=1
+pkgrel=4
+pkgdesc='Arch Linux package cache and repository'
+arch=('x86_64')
+url=
+source=("20-sudo.conf" "$pkgname.service" "20-pacman.conf" "rsyncd.conf" "mirrorlist")
+makedepends=()
+depends=('dotnet-runtime' 'aspnet-runtime' 'reflector' 'rsync')
+b2sums=('e2e02fbedb34257902cbe2bdcd7ec56c65500655a51c244100e4d6c0a9c0514b8658ac28c971ecb43f5c4e92721d8ab79cf2ef0fc7f3bc857bafad3ebc662ada'
+        'c089980a16a2aaee32d0ce2ff3ae05a145430535f370202d60f24ee1d1b3130464d66bf3bb0b27325dd3f90ff8304f5155264485ef222ae664176888e3c9e7aa'
+        'f6f954c1945dde1de9d91ca2c6a274c20f01393ae5f3b7363869d789e3a946cd36a5e0bc01c603cfa3dc2b5e9562e99ba78867a61c38ab5639db86a475285082'
+        '075a4afc528195393aa2827eac09602c850fa0977b513c3b0ad8f3bf304d75651c70853fe12ef93bfb15331efcd9c1ec88765241983aa00deac3c4d22701b5c3'
+        '3061b754f618b2d4f8b0c085da28e28d4e374538af7d24dc8e3c1d9a6cc835cd3a711ab5fd3faa6dc89f0ed0d4349f0b7f16abb0ed0aed8662c969672e97c644')
+install=proto.install 
+
+package() {
+  install -Dm644 $srcdir/20-pacman.conf $pkgdir/usr/lib/sysusers.d/20-$pkgname.conf
+  install -Dm644 $srcdir/20-sudo.conf $pkgdir/etc/sudoers.d/$pkgname
+  install -Dm644 $srcdir/$pkgname.service $pkgdir/etc/systemd/system/$pkgname.service
+  install -Dm644 $srcdir/rsyncd.conf $pkgdir/usr/share/$pkgname/rsyncd.conf
+  install -Dm644 $srcdir/mirrorlist $pkgdir/usr/share/$pkgname/mirrorlist
+}

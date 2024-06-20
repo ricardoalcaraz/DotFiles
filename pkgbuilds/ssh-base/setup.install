@@ -1,11 +1,12 @@
 post_install() {
+    systemctl enable --now sshd
+    systemctl restart sshd
     ufw_setup
-    ufw enable
-    systemctl enable --now ufw
 }
 
 post_upgrade() {
     echo "Running upgrade now"
+    systemctl stop ufw
     ufw_setup
 }
 
@@ -15,6 +16,9 @@ post_remove() {
 }
 
 ufw_setup() {
+    systemctl enable --now ufw
+    ufw --force enable
+    
     ufw default deny
     ufw allow from 192.168.1.0/24
     ufw allow from 63.205.195.240/28

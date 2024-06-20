@@ -1,0 +1,10 @@
+[Unit]
+Description=Scrypted automated backups
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/scrypted
+ExecStartPre=systemctl stop docker-compose@scrypted
+ExecStart=bsdtar --acls --xattrs -cpvaf /opt/backups/scrypted/scrypted-backup.tar /opt/scrypted/volume
+ExecStart=systemctl start docker-compose@scrypted
+ExecStartPost=rsync --quiet -a /opt/scrypted/fast camus.local:/volume2/backups/scrypted/
