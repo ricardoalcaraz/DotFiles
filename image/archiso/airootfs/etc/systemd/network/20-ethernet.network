@@ -22,3 +22,16 @@ RouteMetric=100
 
 [IPv6AcceptRA]
 RouteMetric=100
+
+[Route]
+Gateway=_dhcp4
+InitialCongestionWindow=50
+InitialAdvertisedReceiveWindow=50
+
+[Route]
+Destination=192.168.1.0/24
+Scope=link
+
+[Route]
+Destination=63.205.195.241/28
+Scope=link

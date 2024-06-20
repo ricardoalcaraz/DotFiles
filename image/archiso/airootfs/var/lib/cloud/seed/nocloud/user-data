@@ -3,5 +3,18 @@ users:
   - name: root
     ssh_authorized_keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDcTEJ33s4MNix2XAOxe1wbM5HqcNV5B7XVAdR2K8CfsdpbbVR1LA2+3cQ6WeUkwx64kz26c4WAuQ223rlY99rzkkqY/13mP3mG0D5Qi4/vwHJo7O5CV15rK8sMgRKFnxn4ncBgZZ29mmiBPIVFebtenm+QqHddmvhEzjtN5UkqgC3JhmkEf7naLe+unB60DTl/VViqS6BlE3uTDs5VKgEMknZefIQVZcjhmKrRZKQToltGN2nIUyaWngGBotgpnvWkIOzr6UJoOb/en4uG1EJby3/nIi73qJ+9eHczMNfiRmGoNMltYF7hQwv1+Gyh7SRfgnB+FkVBvs/8SCHwcOPEqdaW7jQwNI+gjpWm6Mx1Gm8pqArixask4FdDRtV25jMGtOWhAgxkc0jqRusGaJoLhkTBqQXdOpt7kEcsgKP5WyqlykityxMBOioC6A3X/QBo/XubVgXmMnq1LVrkpvyGMe8Z10FsGf0WUCYezVeiEuiJWm3psVZi+SXMIxeVLUU= ralcaraz@Ricardos-MacBook-Pro.local
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBKIBa98AmOKjFPaQPYjUoSCGXc8HAqpK7QyhEwkpGif ralcaraz@socktha
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBGoiiJCq4azBqxblGRf7WZUz/yZW7JnWLY9xBJ7NV4dsNgXzu4zGOnFH+3kAgBnY/nZgM1Kg5G3ZD3mUjmFGdQs2VXZH7qsFt+hBY91S6JAIpA0ftsyyVHXq9N420ezPW7pdT4CMDUhbit+mFmYyRlMwsDQ8OI7eSlax8ImHvofavrTXhV6zsS1GrNZixqRp4HnOYswbX3RspoWznnhAqJ6VAWqC44h9BLrFN8HEmaAQHObn97mwkLP6WgqHtf8YBAdxTXQTIzL+H7hfUzE+qX8u2hDIKbwLTI0lD6aXOxPLg3WuKpYmIp9GAXeguUDoBFD0mcZiXwEnLhx4GcPndNnHVw9PCtuZziyKlLmAOJ3K7roJ41drYwLFeNC0v3K4jDx+1PWYiIEpEpGRuM1diKdIR0jrEoL42qSJ9C/n0wJ+r5yKXd5CZJwX7+0sjvonVKAMgpCRHJaCR86YlVZUN1L2otlk/hYhgUA/EC+33ki1nKZCh8uYiO3+CVUhj5zU= nelaflowers@mainframe-2.attlocal.net
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJtX51bT42BHeZzRvECU8fViBmTvFjXQMVI51ieqL48v nelaflowers@mainframe.attlocal.net
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBvOLjsu8EDjEkX5LXyWckjljRuzF3WLzrfz0DqytmYD root@solar
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/F6qrReoCHFA/OuCro4mqK8jVcHqhgABCwZQja3uQn root@shoktho
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKirl2k8pFePKy0dFdMvQlDxSHlQQ3Xh4I83Pq9eXCxq root@meeshti
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIPOtK1I7PCQTelTnts8VQNVrbdjlOnbiZL9CU5e2DZ9 root@rigby
+
+write_files:
+- content: |
+    [Security]
+    PreSharedKey=efb8c558577d15bbcbe33b3fcb5f6df226d1d6e1e366bb3cce9fbeff94b791f9
+  path:/var/lib/iwd/ATTX9XhM83.psk
+
+runcmd:
+- systemctl restart iwd.service

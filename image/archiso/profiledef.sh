@@ -27,4 +27,7 @@ file_permissions=(
   ["/usr/local/bin/choose-mirror"]="0:0:755"
   ["/usr/local/bin/Installation_guide"]="0:0:755"
   ["/usr/local/bin/livecd-sound"]="0:0:755"
+  ["/var/lib/cloud/seed/nocloud/meta-data"]="0:0:0644"
+  ["/var/lib/cloud/seed/nocloud/user-data"]="0:0:0644"
+  ["/var/lib/cloud/seed/nocloud/network-config"]="0:0:0644"
 )
