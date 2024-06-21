@@ -45,3 +45,4 @@ package() {
 	install -dm755 10-network.conf $pkgdir/etc/systemd/network
 	install -m755 $srcdir/network/* $pkgdir/etc/systemd/network/
 }
+

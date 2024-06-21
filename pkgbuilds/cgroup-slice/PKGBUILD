@@ -1,0 +1,8 @@
+
+
+install()
+{
+    $pkgdir/etc/systemd/system/system.slice.d/efficiency.conf
+    $pkgdir/etc/systemd/system/background.slice.d/efficiency-cores.conf
+    install -Dm644 $srcdir/allowed-cpus.conf $pkgdir/etc/systemd/system/machine.slice.d/allowed-cpus.conf
+}q
