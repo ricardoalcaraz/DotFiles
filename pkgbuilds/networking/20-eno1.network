@@ -1,0 +1,14 @@
+[Match]
+PermanentMACAddress=94:c6:91:a2:0b:da
+
+[Link]
+RequiredForOnline=carrier
+MACAddress=7a:9e:d4:fc:eb:c3
+
+[Network]
+MACVLAN=mv-1
+DHCP=no
+IPv6AcceptRA=false
+LinkLocalAddressing=no
+MulticastDNS=false
+LLMNR=false

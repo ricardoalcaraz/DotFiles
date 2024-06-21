@@ -24,14 +24,13 @@ backup=()
 options=()
 install=setup.install
 changelog=
-source=("docker-compose@.service" "journald@noisy.conf" "daemon.json" "disable-overlay-redirect-dir.conf")
+source=("docker-compose@.service" "journald@noisy.conf" "daemon.json" "disable-overlay-redirect-dir.conf" "container.slice")
 noextract=()
-b2sums=(
-	"05604ed4b9ac43eb207ffba201a14c96a2578494c601d1b45253918903055d1e50a2a855f2080b5aa8e214e793aeed2182d28152304feb14fd62fb8ae210f601"
-	"7ffb1636b136075b722e6dfe481c258a82e9642f49e6fe8123768e579d46b3858fe12963610292d3848933e1e6ee65d1a2fe3ca9b716cfd7cd9c582363815c36"
-	"36dae312c6a617d5ae2ee3f1f2f4f31e12f2d6ec7beee38815e42ca9a096b0e0e625dd9e0c166a541d52e8664325b64dd2d6fb20d082a0feaf64b0aa4378d8a3"
-	"3d1a08ad4cd13119183c387f4c22eaa506ac67f79eac0c69444ecf0497a40d94f55888510887a814a65836ee8af2c3a093dab1acb2a7b53800d719382038011d"
-)
+b2sums=('05604ed4b9ac43eb207ffba201a14c96a2578494c601d1b45253918903055d1e50a2a855f2080b5aa8e214e793aeed2182d28152304feb14fd62fb8ae210f601'
+        '7ffb1636b136075b722e6dfe481c258a82e9642f49e6fe8123768e579d46b3858fe12963610292d3848933e1e6ee65d1a2fe3ca9b716cfd7cd9c582363815c36'
+        '6f830a6c589fd725633f6e399fc388df273c012e519ebe9040d9642ef5373f88210865e0cbca7ed90ec9e44e4af6800a3b2de35785dca37751bdbe67d13199ff'
+        '3d1a08ad4cd13119183c387f4c22eaa506ac67f79eac0c69444ecf0497a40d94f55888510887a814a65836ee8af2c3a093dab1acb2a7b53800d719382038011d'
+        '637dc0a078541a0c4a04e279d4bd0a25a3109779a197a6dc73698065330cac0cbfb926adb01e7086eaa9f8a9b840089be6499f31dc46ca300191d92861e80512')
 validpgpkeys=()
 
 
@@ -41,4 +40,5 @@ package() {
 	install -Dm644 journald@noisy.conf $pkgdir/etc/systemd/journald@noisy.conf
 	install -Dm644 disable-overlay-redirect-dir.conf $pkgdir/etc/modprobe.d/disable-overlay-redirect-dir.conf
 	install -Dm644 daemon.json $pkgdir/etc/docker/daemon.json
+	install -Dm644 container.slice $pkgdir/etc/systemd/system/container.slice
 }

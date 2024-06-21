@@ -41,11 +41,7 @@ validpgpkeys=()
 
 package() {
 	cd $srcdir
-	install -Dm644 scrypted.yml $pkgdir/opt/scrypted/docker-compose.yml
-	install -Dm644 backup-scrypted.service $pkgdir/etc/systemd/system/backup-scrypted.service
-	install -Dm644 backup-scrypted.timer $pkgdir/etc/systemd/system/backup-scrypted.timer
-	install -Dm755 restore-scrypted.sh $pkgdir/usr/bin/restore-scrypted.sh
-    install -m644 *.*mount $pkgdir/etc/systemd/system/
-    install -Dm644 nsswitch.conf $pkgdir/usr/share/scrypted-service/nsswitch.conf
-    install -Dm644 dnssec.conf $pkgdir/etc/systemd/resolved.conf.d/dnssec.conf
+	install -Dm644 10-network.conf $pkgdir/etc/systemd/network.conf.d/10-network.conf
+	install -dm755 10-network.conf $pkgdir/etc/systemd/network
+	install -m755 $srcdir/network/* $pkgdir/etc/systemd/network/
 }

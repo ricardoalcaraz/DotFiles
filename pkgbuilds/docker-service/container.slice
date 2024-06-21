@@ -1,0 +1,7 @@
+[Unit]
+Description=Container and other similar technology slices
+Before=slices.target
+
+
+[Slice]
+AllowedCPUs=0-15

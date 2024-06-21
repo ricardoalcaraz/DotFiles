@@ -1,0 +1,6 @@
+[NetDev]
+Name=mv-1
+Kind=macvlan
+
+[MACVLAN]
+Mode=bridge
