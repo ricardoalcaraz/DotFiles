@@ -6,4 +6,7 @@ install()
     $pkgdir/etc/systemd/system/background.slice.d/efficiency-cores.conf
     install -Dm644 $srcdir/allowed-cpus.conf $pkgdir/etc/systemd/system/machine.slice.d/allowed-cpus.conf
     echo 'ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"' > /etc/udev/rules.d/99-removable.rules
+    # note: this goes in install file
+    git config --global user.email "mail@ricardoalcaraz.dev"
+    git config --global user.name "ralcarazislam"
 }q
