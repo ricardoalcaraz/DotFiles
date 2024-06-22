@@ -18,10 +18,12 @@ post_remove() {
 ufw_setup() {
     systemctl enable --now ufw
     ufw --force enable
-    
     ufw default deny
     ufw allow from 192.168.1.0/24
     ufw allow from 63.205.195.240/28
+    ufw allow from 63.205.195.254/32
+    ufw allow from fe80::96c6:91ff:fea2:bda/64
     ufw limit ssh
+    ufw deny from 129.80.209.136/32 # fuck this guy in particular
     ufw logging off
 }

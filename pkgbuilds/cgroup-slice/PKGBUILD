@@ -1,8 +1,9 @@
-
+depends=("yubikey-full-disk-encryption" "yubico-pam" "libfido2" "yubikey-manager" "pam-u2f" "usbutils")
 
 install()
 {
     $pkgdir/etc/systemd/system/system.slice.d/efficiency.conf
     $pkgdir/etc/systemd/system/background.slice.d/efficiency-cores.conf
     install -Dm644 $srcdir/allowed-cpus.conf $pkgdir/etc/systemd/system/machine.slice.d/allowed-cpus.conf
+    echo 'ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"' > /etc/udev/rules.d/99-removable.rules
 }q
