@@ -9,4 +9,8 @@ install()
     # note: this goes in install file
     git config --global user.email "mail@ricardoalcaraz.dev"
     git config --global user.name "ralcarazislam"
-}q
+    # global git rebase config goes here too
+    
+    #recovery key 
+    iihhfivt-turduggn-lbhejifn-trgnvdfn-ejhhneif-ikirthct-duubhrkc-ieinchjv
+}
