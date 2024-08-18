@@ -11,8 +11,8 @@ services:
         - ${DOCKER_ROOT}/sonarr:/config
         - ${MEDIA_ROOT}/tv:/tv
         - ${DL_DIR}:/downloads
-    #ports:
-    #    - 8989:8989
+    ports:
+        - 8989:8989
     restart: unless-stopped
     networks:
       - media
@@ -28,8 +28,8 @@ services:
       - ${DOCKER_ROOT}/radarr:/config
       - ${MEDIA_ROOT}/movies:/movies
       - ${DL_DIR}:/downloads
-    #ports:
-    #  - 7878:7878
+    ports:
+      - 7878:7878
     restart: unless-stopped
     networks:
       - media
@@ -45,8 +45,8 @@ services:
       - ${DOCKER_ROOT}/lidarr:/config
       - ${MEDIA_ROOT}/music:/music #optional
       - ${DL_DIR}:/downloads #optional
-    #ports:
-    #  - 8686:8686
+    ports:
+      - 8686:8686
     restart: unless-stopped
     networks:
       - media
@@ -60,8 +60,8 @@ services:
       - TZ=${TZ}
     volumes:
       - ${DOCKER_ROOT}/overseerr:/config
-    #ports:
-    #  - 5055:5055
+    ports:
+      - 5055:5055
     restart: unless-stopped
     networks:
       - media
@@ -75,20 +75,21 @@ services:
       - TZ=${TZ}
     volumes:
       - ${DOCKER_ROOT}/prowlarr:/config
-    #ports:
-    #  - 9696:9696
+    ports:
+      - 9696:9696
     restart: unless-stopped
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
     container_name: sabnzbd
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /path/to/sabnzbd/config:/config
-      - /path/to/downloads:/downloads #optional
-      - /path/to/incomplete/downloads:/incomplete-downloads #optional
+      - ${DOCKER_ROOT}/sabnzbd:/config
+      - ${DL_DIR}:/downloads
+      - ${DL_DIR}/incomplete:/incomplete-downloads #optional
     ports:
       - 8080:8080
     restart: unless-stopped
@@ -96,13 +97,13 @@ services:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /path/to/deluge/config:/config
-      - /path/to/downloads:/downloads
+      - ${DOCKER_ROOT}/deluge:/config
+      - ${DL_DIR}:/downloads
     ports:
       - 8112:8112
       - 6881:6881
@@ -113,14 +114,14 @@ services:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - AUTO_UPDATE=true #optional
       - RUN_OPTS= #optional
     volumes:
-      - /path/to/jackett/data:/config
-      - /path/to/blackhole:/downloads
+      - ${DOCKER_ROOT}/jackett:/config
+      - ${DL_DIR}:/downloads
     ports:
       - 9117:9117
     restart: unless-stopped
